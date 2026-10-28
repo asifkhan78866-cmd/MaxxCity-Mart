@@ -2,16 +2,8 @@
 
 import { retailerBusinessTypes, retailerProposals } from "@/content/partnerships";
 import { BusinessDisclaimerLink, BusinessNextSteps, PrivacyLink } from "@/components/forms/enquiry-copy";
-import {
-  ChoiceGroup,
-  ConsentField,
-  EnquiryForm,
-  FormSection,
-  PhoneField,
-  SelectField,
-  TextArea,
-  TextField,
-} from "@/components/forms/form-kit";
+import { EnquiryForm } from "@/components/forms/enquiry-form";
+import { ChoiceGroup, ConsentField, FormSection, PhoneField, SelectField, TextArea, TextField } from "@/components/forms/fields";
 
 export function RetailerForm() {
   return (

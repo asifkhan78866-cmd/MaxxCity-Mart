@@ -2,16 +2,8 @@
 
 import { franchise } from "@/content/franchise";
 import { indianStates } from "@/content/regions";
-import {
-  ChoiceGroup,
-  ConsentField,
-  EnquiryForm,
-  FormSection,
-  PhoneField,
-  SelectField,
-  TextArea,
-  TextField,
-} from "@/components/forms/form-kit";
+import { EnquiryForm } from "@/components/forms/enquiry-form";
+import { ChoiceGroup, ConsentField, FormSection, PhoneField, SelectField, TextArea, TextField } from "@/components/forms/fields";
 import { LegalLink } from "@/components/forms/enquiry-copy";
 
 export function FranchiseForm() {

@@ -4,15 +4,8 @@ import { useState } from "react";
 import { collectionStores } from "@/content/stores";
 import { HELP_CHOOSE_BRANCH } from "./constants";
 import { productPriceRanges } from "@/content/product-requests";
-import {
-  ConsentField,
-  EnquiryForm,
-  FormSection,
-  PhoneField,
-  SelectField,
-  TextArea,
-  TextField,
-} from "@/components/forms/form-kit";
+import { EnquiryForm } from "@/components/forms/enquiry-form";
+import { ConsentField, FormSection, PhoneField, SelectField, TextArea, TextField } from "@/components/forms/fields";
 import { UploadField } from "@/components/forms/upload-field";
 import { LegalLink } from "@/components/forms/enquiry-copy";
 

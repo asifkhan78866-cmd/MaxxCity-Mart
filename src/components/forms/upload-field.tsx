@@ -2,7 +2,8 @@
 
 import { useEffect, useId, useRef, useState, type DragEvent } from "react";
 import { FileText, ImagePlus, Loader2, RefreshCw, Trash2 } from "lucide-react";
-import { useFormKit, FieldMessage } from "@/components/forms/form-kit";
+import { FieldMessage } from "@/components/forms/fields";
+import { useFormKit } from "@/components/forms/form-context";
 import { uploadLimits } from "@/lib/forms/types";
 import { track } from "@/lib/analytics/track";
 
@@ -68,7 +69,7 @@ export function UploadField({
     if (inputRef.current) inputRef.current.value = "";
   };
 
-  async function accept_(picked: File | undefined) {
+  async function handleFile(picked: File | undefined) {
     if (!picked) return;
     setFileError(name, null);
     const allowed: readonly string[] = kind === "image" ? uploadLimits.imageTypes : uploadLimits.catalogueTypes;
@@ -106,7 +107,7 @@ export function UploadField({
   const onDrop = (e: DragEvent) => {
     e.preventDefault();
     setDragging(false);
-    void accept_(e.dataTransfer.files[0]);
+    void handleFile(e.dataTransfer.files[0]);
   };
 
   const hintId = `${id}-hint`;
@@ -126,7 +127,7 @@ export function UploadField({
         aria-labelledby={`${id}-label`}
         aria-describedby={[hintId, errorId].filter(Boolean).join(" ")}
         aria-invalid={error ? true : undefined}
-        onChange={(e) => void accept_(e.target.files?.[0])}
+        onChange={(e) => void handleFile(e.target.files?.[0])}
       />
 
       {file ? (

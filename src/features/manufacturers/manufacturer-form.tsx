@@ -3,15 +3,8 @@
 import { supplierCategories } from "@/content/categories";
 import { BusinessDisclaimerLink, BusinessNextSteps, PrivacyLink } from "@/components/forms/enquiry-copy";
 import { UploadField } from "@/components/forms/upload-field";
-import {
-  ChoiceGroup,
-  ConsentField,
-  EnquiryForm,
-  FormSection,
-  PhoneField,
-  TextArea,
-  TextField,
-} from "@/components/forms/form-kit";
+import { EnquiryForm } from "@/components/forms/enquiry-form";
+import { ChoiceGroup, ConsentField, FormSection, PhoneField, TextArea, TextField } from "@/components/forms/fields";
 
 export function ManufacturerForm() {
   return (

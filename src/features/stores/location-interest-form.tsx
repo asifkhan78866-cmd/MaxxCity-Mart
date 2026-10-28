@@ -2,14 +2,8 @@
 
 import { indianStates } from "@/content/regions";
 import { PrivacyLink } from "@/components/forms/enquiry-copy";
-import {
-  ConsentField,
-  EnquiryForm,
-  PhoneField,
-  SelectField,
-  TextArea,
-  TextField,
-} from "@/components/forms/form-kit";
+import { EnquiryForm } from "@/components/forms/enquiry-form";
+import { ConsentField, PhoneField, SelectField, TextArea, TextField } from "@/components/forms/fields";
 
 export function LocationInterestForm() {
   return (

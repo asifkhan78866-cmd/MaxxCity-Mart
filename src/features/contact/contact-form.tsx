@@ -3,14 +3,8 @@
 import { useState, useSyncExternalStore } from "react";
 import { contactTopics } from "@/content/contact";
 import { PrivacyLink } from "@/components/forms/enquiry-copy";
-import {
-  ConsentField,
-  EnquiryForm,
-  PhoneField,
-  SelectField,
-  TextArea,
-  TextField,
-} from "@/components/forms/form-kit";
+import { EnquiryForm } from "@/components/forms/enquiry-form";
+import { ConsentField, PhoneField, SelectField, TextArea, TextField } from "@/components/forms/fields";
 
 const noSubscribe = () => () => {};
 const topicFromUrl = () => {
