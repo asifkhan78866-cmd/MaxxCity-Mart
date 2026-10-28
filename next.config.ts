@@ -1,10 +1,41 @@
 import type { NextConfig } from "next";
 
+/**
+ * Content-Security-Policy for production builds.
+ * - Scripts, styles, fonts and images load from this site only, plus the
+ *   optional analytics providers (loaded only after visitor consent) and the
+ *   Vercel preview toolbar.
+ * - 'unsafe-inline' is required for Next.js's inline bootstrap scripts and
+ *   the JSON-LD blocks without per-request nonces, which would force every
+ *   page to render dynamically.
+ * - blob: images are the local preview of a photo before upload.
+ * Development is left without a CSP because Next.js dev tooling needs eval.
+ */
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://plausible.io https://vercel.live",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https://www.googletagmanager.com https://*.google-analytics.com https://vercel.live https://vercel.com",
+  "font-src 'self' https://vercel.live",
+  "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://plausible.io https://vercel.live wss://ws-us3.pusher.com",
+  "frame-src https://vercel.live",
+  "frame-ancestors 'self'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "object-src 'none'",
+].join("; ");
+
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   { key: "X-Frame-Options", value: "SAMEORIGIN" },
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=()" },
+  ...(process.env.NODE_ENV === "production"
+    ? [
+        { key: "Content-Security-Policy", value: contentSecurityPolicy },
+        { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
+      ]
+    : []),
 ];
 
 const nextConfig: NextConfig = {
