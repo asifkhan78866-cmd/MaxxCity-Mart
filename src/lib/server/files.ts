@@ -33,6 +33,8 @@ async function prepareImage(buf: Buffer, originalName: string): Promise<Prepared
     const bytes = await sharp(buf, { failOn: "error", limitInputPixels: 50_000_000 })
       .rotate()
       .resize({ width: 2000, height: 2000, fit: "inside", withoutEnlargement: true })
+      // JPEG has no transparency; without this, transparent areas turn black.
+      .flatten({ background: "#ffffff" })
       .jpeg({ quality: 85, mozjpeg: true })
       .toBuffer();
     return { bytes, contentType: "image/jpeg", extension: "jpg", originalName: safeName(originalName) };

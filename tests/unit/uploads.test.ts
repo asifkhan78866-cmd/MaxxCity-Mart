@@ -1,7 +1,7 @@
 import sharp from "sharp";
 import { describe, expect, it } from "vitest";
 import { prepareUpload, UploadError } from "@/lib/server/files";
-import { file, jpegWithExif } from "../support/fixtures";
+import { file, jpegWithExif, transparentPng } from "../support/fixtures";
 
 describe("prepareUpload", () => {
   it("re-encodes photos as JPEG and strips camera metadata", async () => {
@@ -19,6 +19,12 @@ describe("prepareUpload", () => {
     const webp = await sharp({ create: { width: 8, height: 8, channels: 3, background: "#0f0" } }).webp().toBuffer();
     expect((await prepareUpload(file(png, "a.png", "image/png"), "image")).contentType).toBe("image/jpeg");
     expect((await prepareUpload(file(webp, "a.webp", "image/webp"), "image")).contentType).toBe("image/jpeg");
+  });
+
+  it("puts transparent images on a white background", async () => {
+    const prepared = await prepareUpload(file(await transparentPng(), "cutout.png", "image/png"), "image");
+    const { data } = await sharp(prepared.bytes).raw().toBuffer({ resolveWithObject: true });
+    expect([data[0], data[1], data[2]].every((channel) => (channel ?? 0) > 245)).toBe(true);
   });
 
   it("downsizes very large photos", async () => {
