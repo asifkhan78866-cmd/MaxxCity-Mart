@@ -1,4 +1,4 @@
-import { Container } from "@/components/ui/layout";
+import { Container } from "@/components/ui/container";
 import { pricing } from "@/content/site";
 
 export function PriceTag({ className = "" }: { className?: string }) {

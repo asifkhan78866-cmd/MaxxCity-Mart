@@ -1,14 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Phone } from "lucide-react";
-import { Container } from "@/components/ui/layout";
+import { Container } from "@/components/ui/container";
+import { MobileNav } from "@/components/navigation/mobile-nav";
+import { NavLinks } from "@/components/navigation/nav-links";
 import { buttonClasses } from "@/components/ui/button";
 import { TrackedLink } from "@/components/ui/tracked-link";
-import { MobileNav } from "@/components/mobile-nav";
-import { NavLinks } from "@/components/nav-links";
 import { contact } from "@/content/contact";
 import { telHref } from "@/lib/links";
-import logo from "../../public/brand/maxxcity-mart-logo.png";
+import logo from "../../../public/brand/maxxcity-mart-logo.png";
 
 export function SiteHeader() {
   return (

@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { PageHero } from "@/components/page-hero";
-import { Container, SectionHeading } from "@/components/ui/layout";
+import { PageHero } from "@/components/layout/page-hero";
+import { Container } from "@/components/ui/container";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { ButtonLink } from "@/components/ui/button";
 import { PriceBand } from "@/components/sections/price-band";
 import { CategoryGrid } from "@/components/sections/category-grid";

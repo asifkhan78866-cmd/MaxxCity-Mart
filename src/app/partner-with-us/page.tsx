@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Building2, Factory, Handshake, Store, Truck, Users } from "lucide-react";
-import { PageHero } from "@/components/page-hero";
-import { Container } from "@/components/ui/layout";
+import { PageHero } from "@/components/layout/page-hero";
+import { Container } from "@/components/ui/container";
 import { CtaBand } from "@/components/sections/cta-band";
 import { contact } from "@/content/contact";
 import { pageMetadata } from "@/lib/seo";

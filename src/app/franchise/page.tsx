@@ -1,6 +1,8 @@
 import { Check, Minus } from "lucide-react";
-import { PageHero } from "@/components/page-hero";
-import { Container, SectionHeading, Notice } from "@/components/ui/layout";
+import { PageHero } from "@/components/layout/page-hero";
+import { Container } from "@/components/ui/container";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { Notice } from "@/components/ui/notice";
 import { buttonClasses } from "@/components/ui/button";
 import { TrackedLink } from "@/components/ui/tracked-link";
 import { Steps } from "@/components/sections/steps";

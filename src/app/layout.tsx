@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Figtree, Outfit } from "next/font/google";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
-import { MobileActionBar } from "@/components/mobile-action-bar";
-import { ConsentBanner } from "@/components/consent";
-import { JsonLd } from "@/components/ui/layout";
+import { SiteHeader } from "@/components/layout/site-header";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { MobileActionBar } from "@/components/layout/mobile-action-bar";
+import { ConsentBanner } from "@/components/layout/consent-banner";
+import { JsonLd } from "@/components/seo/json-ld";
 import { site } from "@/content/site";
 import { defaultOgImage, organizationJsonLd, siteUrl, websiteJsonLd } from "@/lib/seo";
 import { publicEnv } from "@/lib/config/public-env";

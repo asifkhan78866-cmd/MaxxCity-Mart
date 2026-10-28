@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { PageHero } from "@/components/page-hero";
-import { Container } from "@/components/ui/layout";
+import { PageHero } from "@/components/layout/page-hero";
+import { Container } from "@/components/ui/container";
 import { legalNav } from "@/content/navigation";
 import { legalLastUpdated } from "@/content/site";
 

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LegalPage } from "@/components/legal-page";
+import { LegalPage } from "@/components/layout/legal-page";
 import { contact } from "@/content/contact";
 import { site } from "@/content/site";
 import { pageMetadata } from "@/lib/seo";

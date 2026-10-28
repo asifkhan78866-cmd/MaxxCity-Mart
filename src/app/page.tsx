@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check, Factory, Store as StoreIcon, ImagePlus, Quote } from "lucide-react";
-import { Container, SectionHeading, Eyebrow } from "@/components/ui/layout";
+import { Container } from "@/components/ui/container";
+import { Eyebrow, SectionHeading } from "@/components/ui/section-heading";
+import { JsonLd } from "@/components/seo/json-ld";
 import { ButtonLink, buttonClasses } from "@/components/ui/button";
 import { TrackedLink } from "@/components/ui/tracked-link";
 import { PriceBand, PriceTag } from "@/components/sections/price-band";
@@ -11,7 +13,6 @@ import { CtaBand } from "@/components/sections/cta-band";
 import { StoreCard } from "@/components/sections/store-card";
 import { FounderPortrait } from "@/components/sections/founder-portrait";
 import { Steps } from "@/components/sections/steps";
-import { JsonLd } from "@/components/ui/layout";
 import { homeFaqs } from "@/content/faqs";
 import { franchise, franchiseSupport } from "@/content/franchise";
 import { site } from "@/content/site";

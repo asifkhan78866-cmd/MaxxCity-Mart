@@ -1,5 +1,7 @@
-import { PageHero } from "@/components/page-hero";
-import { Container, JsonLd, SectionHeading } from "@/components/ui/layout";
+import { PageHero } from "@/components/layout/page-hero";
+import { Container } from "@/components/ui/container";
+import { JsonLd } from "@/components/seo/json-ld";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { StoreCard } from "@/components/sections/store-card";
 import { LocationInterestForm } from "@/features/stores/location-interest-form";
 import { openStores, shortLocation, stores } from "@/content/stores";

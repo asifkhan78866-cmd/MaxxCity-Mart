@@ -1,6 +1,7 @@
 import { Quote } from "lucide-react";
-import { PageHero } from "@/components/page-hero";
-import { Container, SectionHeading } from "@/components/ui/layout";
+import { PageHero } from "@/components/layout/page-hero";
+import { Container } from "@/components/ui/container";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { ButtonLink } from "@/components/ui/button";
 import { FounderPortrait } from "@/components/sections/founder-portrait";
 import { CtaBand } from "@/components/sections/cta-band";

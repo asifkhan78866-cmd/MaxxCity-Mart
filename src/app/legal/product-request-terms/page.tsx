@@ -1,4 +1,4 @@
-import { LegalPage } from "@/components/legal-page";
+import { LegalPage } from "@/components/layout/legal-page";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({

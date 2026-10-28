@@ -1,5 +1,7 @@
-import { PageHero } from "@/components/page-hero";
-import { Container, Notice, SectionHeading } from "@/components/ui/layout";
+import { PageHero } from "@/components/layout/page-hero";
+import { Container } from "@/components/ui/container";
+import { Notice } from "@/components/ui/notice";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { ButtonLink } from "@/components/ui/button";
 import { RetailerForm } from "@/features/retailers/retailer-form";
 import { retailerProposals } from "@/content/partnerships";

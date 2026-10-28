@@ -1,15 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MapPin, Phone, MessageCircle } from "lucide-react";
-import { Container } from "@/components/ui/layout";
+import { Container } from "@/components/ui/container";
+import { ConsentSettingsLink } from "@/components/layout/consent-banner";
 import { TrackedLink } from "@/components/ui/tracked-link";
 import { footerNav, legalNav } from "@/content/navigation";
 import { contact } from "@/content/contact";
 import { site } from "@/content/site";
-import { ConsentSettingsLink } from "@/components/consent";
 import { openStores, formatAddress } from "@/content/stores";
 import { telHref, whatsappHref } from "@/lib/links";
-import logo from "../../public/brand/maxxcity-mart-logo.png";
+import logo from "../../../public/brand/maxxcity-mart-logo.png";
 
 export function SiteFooter() {
   const store = openStores[0];

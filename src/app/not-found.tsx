@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { Container } from "@/components/ui/layout";
+import { Container } from "@/components/ui/container";
 import { ButtonLink } from "@/components/ui/button";
 
 export const metadata: Metadata = {

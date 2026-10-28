@@ -1,5 +1,5 @@
-import { PageHero } from "@/components/page-hero";
-import { Container } from "@/components/ui/layout";
+import { PageHero } from "@/components/layout/page-hero";
+import { Container } from "@/components/ui/container";
 import { FaqList } from "@/components/sections/faq-list";
 import { CtaBand } from "@/components/sections/cta-band";
 import { faqs } from "@/content/faqs";
