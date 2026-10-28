@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { absoluteUrl, siteUrl } from "@/lib/seo/metadata";
+import { absoluteUrl } from "@/lib/seo/metadata";
 import { vercelEnv } from "@/lib/config/env";
 
 export default function robots(): MetadataRoute.Robots {
@@ -12,6 +12,5 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: { userAgent: "*", allow: "/", disallow: ["/api/"] },
     sitemap: absoluteUrl("/sitemap.xml"),
-    host: siteUrl,
   };
 }
