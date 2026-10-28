@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { JsonLd } from "@/components/seo/json-ld";
-import { breadcrumbJsonLd } from "@/lib/seo";
+import { breadcrumbJsonLd } from "@/lib/seo/json-ld";
 
 export type Crumb = { name: string; path: string };
 

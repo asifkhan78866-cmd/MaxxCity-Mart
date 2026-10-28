@@ -6,7 +6,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { FounderPortrait } from "@/components/sections/founder-portrait";
 import { CtaBand } from "@/components/sections/cta-band";
 import { site } from "@/content/site";
-import { pageMetadata } from "@/lib/seo";
+import { pageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = pageMetadata({
   title: "Founder & Vision — Syed Asif",

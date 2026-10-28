@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { ButtonLink } from "@/components/ui/button";
 import { RetailerForm } from "@/features/retailers/retailer-form";
 import { retailerProposals } from "@/content/partnerships";
-import { pageMetadata } from "@/lib/seo";
+import { pageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = pageMetadata({
   title: "Retailer & Distributor Partnerships",

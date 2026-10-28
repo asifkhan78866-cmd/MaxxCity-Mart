@@ -1,5 +1,5 @@
 import { LegalPage } from "@/components/layout/legal-page";
-import { pageMetadata } from "@/lib/seo";
+import { pageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = pageMetadata({
   title: "Product Request Terms",

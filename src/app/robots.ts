@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { absoluteUrl, siteUrl } from "@/lib/seo";
+import { absoluteUrl, siteUrl } from "@/lib/seo/metadata";
 import { vercelEnv } from "@/lib/config/env";
 
 export default function robots(): MetadataRoute.Robots {

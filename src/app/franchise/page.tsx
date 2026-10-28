@@ -13,7 +13,7 @@ import { contact } from "@/content/contact";
 import { franchise, franchiseeResponsibilities, franchiseProcess, franchiseSupport } from "@/content/franchise";
 import { faqs } from "@/content/faqs";
 import { whatsappHref } from "@/lib/links";
-import { pageMetadata } from "@/lib/seo";
+import { pageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = pageMetadata({
   title: "Franchise Opportunity — FOFO Fixed-Price Retail",

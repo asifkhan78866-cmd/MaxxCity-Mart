@@ -9,7 +9,7 @@ import { PriceBand } from "@/components/sections/price-band";
 import { CategoryGrid } from "@/components/sections/category-grid";
 import { CtaBand } from "@/components/sections/cta-band";
 import { site } from "@/content/site";
-import { pageMetadata } from "@/lib/seo";
+import { pageMetadata } from "@/lib/seo/metadata";
 import storefront from "../../../public/images/maxxcity-mart-adilabad-storefront.jpg";
 
 export const metadata = pageMetadata({

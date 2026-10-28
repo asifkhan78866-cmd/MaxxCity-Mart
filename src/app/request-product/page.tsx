@@ -4,7 +4,7 @@ import { Container } from "@/components/ui/container";
 import { Notice } from "@/components/ui/notice";
 import { ProductRequestForm } from "@/features/product-requests/product-request-form";
 import { productRequestSteps } from "@/content/product-requests";
-import { pageMetadata } from "@/lib/seo";
+import { pageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = pageMetadata({
   title: "Request a Product — Send Us a Photo",

@@ -3,7 +3,7 @@ import { Container } from "@/components/ui/container";
 import { FaqList } from "@/components/sections/faq-list";
 import { CtaBand } from "@/components/sections/cta-band";
 import { faqs } from "@/content/faqs";
-import { pageMetadata } from "@/lib/seo";
+import { pageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = pageMetadata({
   title: "Frequently Asked Questions",

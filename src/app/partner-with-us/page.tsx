@@ -4,7 +4,7 @@ import { PageHero } from "@/components/layout/page-hero";
 import { Container } from "@/components/ui/container";
 import { CtaBand } from "@/components/sections/cta-band";
 import { contact } from "@/content/contact";
-import { pageMetadata } from "@/lib/seo";
+import { pageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = pageMetadata({
   title: "Partner With Us — Business Enquiries",

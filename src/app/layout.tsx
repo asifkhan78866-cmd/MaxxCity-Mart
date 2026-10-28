@@ -6,7 +6,8 @@ import { MobileActionBar } from "@/components/layout/mobile-action-bar";
 import { ConsentBanner } from "@/components/layout/consent-banner";
 import { JsonLd } from "@/components/seo/json-ld";
 import { site } from "@/content/site";
-import { defaultOgImage, organizationJsonLd, siteUrl, websiteJsonLd } from "@/lib/seo";
+import { defaultOgImage, siteUrl } from "@/lib/seo/metadata";
+import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/json-ld";
 import { publicEnv } from "@/lib/config/public-env";
 import "./globals.css";
 

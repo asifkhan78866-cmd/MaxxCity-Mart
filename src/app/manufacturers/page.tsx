@@ -7,7 +7,7 @@ import { Steps } from "@/components/sections/steps";
 import { ManufacturerForm } from "@/features/manufacturers/manufacturer-form";
 import { supplierCategories } from "@/content/categories";
 import { manufacturerProcess } from "@/content/partnerships";
-import { pageMetadata } from "@/lib/seo";
+import { pageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = pageMetadata({
   title: "Manufacturer Partnerships — Supply MaxxCity Mart",

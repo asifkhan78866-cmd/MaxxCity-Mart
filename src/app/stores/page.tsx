@@ -5,7 +5,8 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { StoreCard } from "@/components/sections/store-card";
 import { LocationInterestForm } from "@/features/stores/location-interest-form";
 import { openStores, shortLocation, stores } from "@/content/stores";
-import { allStoresJsonLd, pageMetadata } from "@/lib/seo";
+import { allStoresJsonLd } from "@/lib/seo/json-ld";
+import { pageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = pageMetadata({
   title: "Find a Store in Adilabad",

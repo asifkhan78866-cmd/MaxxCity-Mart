@@ -10,7 +10,7 @@ import { ContactForm } from "@/features/contact/contact-form";
 import { contact } from "@/content/contact";
 import { openStores } from "@/content/stores";
 import { telHref, whatsappHref } from "@/lib/links";
-import { pageMetadata } from "@/lib/seo";
+import { pageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = pageMetadata({
   title: `Contact Us — Call or WhatsApp ${contact.phoneDisplay}`,
