@@ -9,9 +9,11 @@ describe("makeReference", () => {
     expect(ref).toMatch(/^PR-261029-[A-HJ-NP-Z2-9]{5}$/);
   });
 
-  it("does not repeat across many calls", () => {
-    const refs = new Set(Array.from({ length: 2000 }, () => makeReference("FR")));
-    expect(refs.size).toBe(2000);
+  it("varies its code between calls", () => {
+    // 32^5 ≈ 33.5 million codes per prefix per day. 200 draws collide with
+    // probability ≈ 0.06%; genuine collisions are retried when saving.
+    const refs = new Set(Array.from({ length: 200 }, () => makeReference("FR")));
+    expect(refs.size).toBeGreaterThanOrEqual(199);
   });
 });
 
