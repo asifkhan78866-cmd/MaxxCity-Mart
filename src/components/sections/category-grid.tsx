@@ -9,7 +9,7 @@ import {
   SprayCan,
   type LucideIcon,
 } from "lucide-react";
-import { productCategories } from "@/content/site";
+import { productCategories } from "@/content/categories";
 
 const icons: Record<(typeof productCategories)[number]["icon"], LucideIcon> = {
   CookingPot,

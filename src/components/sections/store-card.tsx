@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Clock, MapPin, Navigation, Phone, PackageCheck } from "lucide-react";
 import { buttonClasses } from "@/components/ui/button";
 import { TrackedLink } from "@/components/ui/tracked-link";
-import { contact } from "@/content/site";
+import { contact } from "@/content/contact";
 import { formatAddress, type Store } from "@/content/stores";
 import { telHref } from "@/lib/links";
 

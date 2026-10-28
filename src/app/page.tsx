@@ -13,9 +13,10 @@ import { FounderPortrait } from "@/components/sections/founder-portrait";
 import { Steps } from "@/components/sections/steps";
 import { JsonLd } from "@/components/ui/layout";
 import { homeFaqs } from "@/content/faqs";
-import { franchise, site } from "@/content/site";
-import { openStores } from "@/content/stores";
-import { franchiseSupport, productRequestSteps } from "@/content/journeys";
+import { franchise, franchiseSupport } from "@/content/franchise";
+import { site } from "@/content/site";
+import { productRequestSteps } from "@/content/product-requests";
+import { openStores, shortLocation } from "@/content/stores";
 import { allStoresJsonLd, pageMetadata } from "@/lib/seo";
 import storefront from "../../public/images/maxxcity-mart-adilabad-storefront.jpg";
 
@@ -276,7 +277,7 @@ export default function HomePage() {
               id="store-heading"
               eyebrow="Visit us"
               title="Our store in Adilabad"
-              lead="Our current MaxxCity Mart store is on Adilabad Main Road in Mavala. New locations will be listed here as they open."
+              lead={`Our current MaxxCity Mart store is on ${openStores[0] ? shortLocation(openStores[0]) : "Adilabad"}. New locations will be listed here as they open.`}
             />
             <ButtonLink href="/stores" variant="outline" className="mt-8">
               Find a store

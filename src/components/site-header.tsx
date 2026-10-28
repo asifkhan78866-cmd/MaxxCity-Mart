@@ -6,7 +6,7 @@ import { buttonClasses } from "@/components/ui/button";
 import { TrackedLink } from "@/components/ui/tracked-link";
 import { MobileNav } from "@/components/mobile-nav";
 import { NavLinks } from "@/components/nav-links";
-import { contact } from "@/content/site";
+import { contact } from "@/content/contact";
 import { telHref } from "@/lib/links";
 import logo from "../../public/brand/maxxcity-mart-logo.png";
 

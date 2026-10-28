@@ -3,7 +3,8 @@ import { Container, Notice, SectionHeading } from "@/components/ui/layout";
 import { ButtonLink } from "@/components/ui/button";
 import { Steps } from "@/components/sections/steps";
 import { ManufacturerForm } from "@/components/forms/business-forms";
-import { supplierCategories } from "@/content/site";
+import { supplierCategories } from "@/content/categories";
+import { manufacturerProcess } from "@/content/partnerships";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -13,12 +14,6 @@ export const metadata = pageMetadata({
   path: "/manufacturers",
 });
 
-const process = [
-  { title: "Send your enquiry", body: "Share your company, product categories and capability, with a catalogue if you have one." },
-  { title: "Evaluation", body: "We assess fit with our range, price point, quality and supply needs." },
-  { title: "Discussion & samples", body: "Where there's potential, we get in touch to discuss products, samples and terms." },
-  { title: "Commercial approval", body: "Any supply arrangement is confirmed in writing before orders are placed." },
-];
 
 export default function ManufacturersPage() {
   return (
@@ -59,7 +54,7 @@ export default function ManufacturersPage() {
         <Container className="py-16 sm:py-20">
           <SectionHeading id="mfg-process-heading" eyebrow="How it works" title="From enquiry to evaluation" />
           <div className="mt-12">
-            <Steps steps={process} />
+            <Steps steps={manufacturerProcess} />
           </div>
         </Container>
       </section>

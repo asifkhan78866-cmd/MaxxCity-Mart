@@ -2,7 +2,7 @@ import { Phone, MessageCircle } from "lucide-react";
 import { Container } from "@/components/ui/layout";
 import { buttonClasses } from "@/components/ui/button";
 import { TrackedLink } from "@/components/ui/tracked-link";
-import { contact } from "@/content/site";
+import { contact } from "@/content/contact";
 import { telHref, whatsappHref } from "@/lib/links";
 
 export function CtaBand({

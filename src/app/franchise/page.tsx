@@ -7,9 +7,9 @@ import { Steps } from "@/components/sections/steps";
 import { CtaBand } from "@/components/sections/cta-band";
 import { FaqList } from "@/components/sections/faq-list";
 import { FranchiseForm } from "@/components/forms/franchise-form";
-import { contact, franchise } from "@/content/site";
+import { contact } from "@/content/contact";
+import { franchise, franchiseeResponsibilities, franchiseProcess, franchiseSupport } from "@/content/franchise";
 import { faqs } from "@/content/faqs";
-import { franchiseProcess, franchiseSupport, franchiseeResponsibilities } from "@/content/journeys";
 import { whatsappHref } from "@/lib/links";
 import { pageMetadata } from "@/lib/seo";
 

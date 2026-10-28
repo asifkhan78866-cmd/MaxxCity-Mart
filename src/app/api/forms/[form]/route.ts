@@ -1,11 +1,11 @@
 import { after, type NextRequest } from "next/server";
-import { formIds, type FormId, type SubmitResult } from "@/lib/forms/types";
+import { type FormId, formIds, type SubmitResult } from "@/lib/forms/types";
+import { contact } from "@/content/contact";
 import { forms, notificationFields } from "@/lib/server/registry";
 import { clientIp, rateLimit } from "@/lib/server/rate-limit";
 import { prepareUpload, UploadError, type PreparedFile } from "@/lib/server/files";
 import { persistSubmission, storageMode } from "@/lib/server/storage";
 import { notifyBusiness } from "@/lib/server/notify";
-import { contact } from "@/content/site";
 
 const MAX_BODY_BYTES = 4.5 * 1024 * 1024;
 const MIN_FILL_MS = 2500;

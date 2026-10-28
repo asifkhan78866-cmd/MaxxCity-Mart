@@ -15,8 +15,8 @@ import {
 } from "react";
 import { AlertCircle, CheckCircle2, Copy, Loader2 } from "lucide-react";
 import type { FormId, SubmitResult } from "@/lib/forms/types";
+import { contact } from "@/content/contact";
 import { track, type AnalyticsEvent } from "@/lib/analytics";
-import { contact } from "@/content/site";
 import { telHref } from "@/lib/links";
 
 /* ---------- Context shared by the form and its fields ---------- */

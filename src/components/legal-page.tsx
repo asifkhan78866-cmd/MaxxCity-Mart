@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { PageHero } from "@/components/page-hero";
 import { Container } from "@/components/ui/layout";
-import { legalNav } from "@/components/navigation";
+import { legalNav } from "@/content/navigation";
 import { legalLastUpdated } from "@/content/site";
 
 const legalLinks = [...legalNav, { href: "/legal/product-request-terms", label: "Product request terms" }];

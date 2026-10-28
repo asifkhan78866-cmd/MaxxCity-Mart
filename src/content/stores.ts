@@ -16,7 +16,10 @@ export type Store = {
   locality: string;
   state: string;
   postalCode: string;
-  streetAddress: string;
+  /** Door / premises number, e.g. "10-193". */
+  premises: string | null;
+  /** Street or road name, e.g. "Adilabad Main Road". */
+  street: string;
   landmark: string | null;
   /** Branch phone in E.164. null = use the main business line. */
   phoneE164: string | null;
@@ -37,7 +40,8 @@ export const stores: Store[] = [
     locality: "Mavala",
     state: "Telangana",
     postalCode: "504002",
-    streetAddress: "10-193, Adilabad Main Road",
+    premises: "10-193",
+    street: "Adilabad Main Road",
     landmark: "Opposite Royal Enfield Showroom",
     phoneE164: null,
     phoneDisplay: null,
@@ -54,9 +58,10 @@ export const stores: Store[] = [
 export const openStores = stores.filter((s) => s.status === "open");
 export const collectionStores = openStores.filter((s) => s.acceptsProductRequestCollection);
 
+/** Full postal address, e.g. for the store card and structured data. */
 export function formatAddress(store: Store) {
   return [
-    store.streetAddress,
+    [store.premises, store.street].filter(Boolean).join(", "),
     store.landmark,
     store.locality,
     `${store.city}, ${store.state} ${store.postalCode}`,
@@ -64,3 +69,6 @@ export function formatAddress(store: Store) {
     .filter(Boolean)
     .join(", ");
 }
+
+/** Short form for running copy, e.g. "Adilabad Main Road, Mavala, Adilabad". */
+export const shortLocation = (store: Store) => `${store.street}, ${store.locality}, ${store.city}`;

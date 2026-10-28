@@ -1,4 +1,4 @@
-import { contact } from "@/content/site";
+import { contact } from "@/content/contact";
 
 export const telHref = (e164: string = contact.phoneE164) => `tel:${e164}`;
 

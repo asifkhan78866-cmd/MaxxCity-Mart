@@ -6,15 +6,15 @@ import { buttonClasses } from "@/components/ui/button";
 import { TrackedLink } from "@/components/ui/tracked-link";
 import { StoreCard } from "@/components/sections/store-card";
 import { ContactForm } from "@/components/forms/business-forms";
-import { contact } from "@/content/site";
+import { contact } from "@/content/contact";
 import { openStores } from "@/content/stores";
 import { telHref, whatsappHref } from "@/lib/links";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Contact Us — Call or WhatsApp +91 91007 70398",
+  title: `Contact Us — Call or WhatsApp ${contact.phoneDisplay}`,
   description:
-    "Contact MaxxCity Mart by phone or WhatsApp on +91 91007 70398, visit our Adilabad store, or send a general, franchise, product or business enquiry.",
+    `Contact MaxxCity Mart by phone or WhatsApp on ${contact.phoneDisplay}, visit our Adilabad store, or send a general, franchise, product or business enquiry.`,
   path: "/contact",
 });
 

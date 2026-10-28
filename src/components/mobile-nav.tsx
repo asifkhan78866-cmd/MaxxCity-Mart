@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { useRef } from "react";
 import { Menu, X, Phone, MessageCircle, ArrowRight } from "lucide-react";
-import { primaryNav } from "@/components/navigation";
+import { primaryNav } from "@/content/navigation";
+import { contact } from "@/content/contact";
 import { buttonClasses } from "@/components/ui/button";
 import { TrackedLink } from "@/components/ui/tracked-link";
-import { contact } from "@/content/site";
 import { telHref, whatsappHref } from "@/lib/links";
 
 /** Full-screen menu built on the native <dialog> element (focus trap, Esc to close). */

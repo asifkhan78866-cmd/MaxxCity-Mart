@@ -1,10 +1,31 @@
-export const productRequestSteps = [
-  { title: "Show us the product", body: "Upload a photo, paste a link, or describe what you're looking for." },
-  { title: "Choose a branch", body: "Pick a MaxxCity Mart collection branch, or ask us to suggest one." },
-  { title: "We review it", body: "Our team checks whether it can be sourced, and at what price and timing." },
-  { title: "We call you back", body: "If confirmed, you collect it from the agreed branch. No payment is taken online." },
-];
+export const franchise = {
+  model: "FOFO",
+  modelFull: "Franchisee Owned, Franchisee Operated",
+  /**
+   * UNPUBLISHED commercial figures. Each is hidden until a value is entered
+   * AND `published` is set to true after the business approves it.
+   */
+  figures: {
+    published: false,
+    franchiseFee: "",
+    investmentRange: "",
+    areaRequirement: "",
+    agreementTerm: "",
+  },
+  /** Options for "investment readiness" on the application form. No amounts by design. */
+  investmentReadiness: [
+    { value: "ready", label: "I have funds arranged and am ready to proceed" },
+    { value: "arranging", label: "I am arranging funds (within the next 3 months)" },
+    { value: "exploring", label: "I am exploring and would like to understand the requirements first" },
+  ],
+  propertyOptions: [
+    { value: "own", label: "Yes — I own a suitable commercial property" },
+    { value: "lease", label: "Yes — I have a property I can lease or rent" },
+    { value: "searching", label: "Not yet — I am looking for a property" },
+  ],
+} as const;
 
+/** What MaxxCity Mart may provide, subject to the final agreement. */
 export const franchiseSupport = [
   { title: "Brand licensing", body: "Approved use of the MaxxCity Mart name, logo and store identity." },
   { title: "Store layout & setup", body: "Guidance on layout, fixtures, signage and product placement." },
@@ -16,6 +37,7 @@ export const franchiseSupport = [
   { title: "Ongoing support", body: "A point of contact for business questions after launch." },
 ];
 
+/** What the franchise partner generally invests in and runs, subject to the final agreement. */
 export const franchiseeResponsibilities = [
   "Commercial premises — owned or leased",
   "Store setup, fit-out and signage",

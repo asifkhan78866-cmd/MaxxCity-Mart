@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LegalPage } from "@/components/legal-page";
-import { contact } from "@/content/site";
+import { contact } from "@/content/contact";
+import { site } from "@/content/site";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -18,7 +19,7 @@ export default function PrivacyPage() {
     >
       <h2>Who we are</h2>
       <p>
-        This website is operated by MaxxCity Mart (&ldquo;we&rdquo;, &ldquo;us&rdquo;). You can contact us about
+        This website is operated by {site.legalName} (&ldquo;we&rdquo;, &ldquo;us&rdquo;). You can contact us about
         this policy or your information by calling or messaging {contact.phoneDisplay}.
       </p>
 

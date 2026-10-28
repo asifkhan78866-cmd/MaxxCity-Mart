@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { primaryNav } from "@/components/navigation";
+import { primaryNav } from "@/content/navigation";
 
 export function NavLinks() {
   const pathname = usePathname();

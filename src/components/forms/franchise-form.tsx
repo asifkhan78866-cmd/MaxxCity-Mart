@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { franchise, indianStates } from "@/content/site";
+import { franchise } from "@/content/franchise";
+import { indianStates } from "@/content/regions";
 import {
   ChoiceGroup,
   ConsentField,

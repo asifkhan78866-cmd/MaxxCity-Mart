@@ -2,7 +2,7 @@ import { PageHero } from "@/components/page-hero";
 import { Container, Notice, SectionHeading } from "@/components/ui/layout";
 import { ButtonLink } from "@/components/ui/button";
 import { RetailerForm } from "@/components/forms/business-forms";
-import { retailerProposals } from "@/lib/forms/types";
+import { retailerProposals } from "@/content/partnerships";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -12,13 +12,6 @@ export const metadata = pageMetadata({
   path: "/retailers",
 });
 
-const descriptions: Record<string, string> = {
-  distribution: "Distributing products that fit the MaxxCity Mart range.",
-  wholesale: "Supplying stock at wholesale for our stores.",
-  "local-sourcing": "Helping us source locally made or locally available products.",
-  regional: "Exploring how we could work together in your region.",
-  other: "Any other commercial relationship that benefits both sides.",
-};
 
 export default function RetailersPage() {
   return (
@@ -49,7 +42,7 @@ export default function RetailersPage() {
             {retailerProposals.map((p) => (
               <div key={p.value} className="reveal grid gap-1 py-5 sm:grid-cols-[14rem_1fr]">
                 <dt className="font-display font-semibold text-ink">{p.label}</dt>
-                <dd className="text-ink-soft">{descriptions[p.value]}</dd>
+                <dd className="text-ink-soft">{p.description}</dd>
               </div>
             ))}
           </dl>

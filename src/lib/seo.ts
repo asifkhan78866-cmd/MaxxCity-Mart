@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { site, contact } from "@/content/site";
+import { site } from "@/content/site";
+import { contact } from "@/content/contact";
 import { openStores, type Store } from "@/content/stores";
 import { resolveSiteUrl } from "@/lib/config/public-env";
 
@@ -96,7 +97,7 @@ export function storeJsonLd(store: Store) {
     parentOrganization: { "@id": `${siteUrl}/#organization` },
     address: {
       "@type": "PostalAddress",
-      streetAddress: [store.streetAddress, store.landmark, store.locality].filter(Boolean).join(", "),
+      streetAddress: [store.premises, store.street, store.landmark, store.locality].filter(Boolean).join(", "),
       addressLocality: store.city,
       addressRegion: store.state,
       postalCode: store.postalCode,

@@ -1,14 +1,10 @@
 import "server-only";
 import type { z } from "zod";
-import type { FormId } from "@/lib/forms/types";
-import {
-  HELP_CHOOSE_BRANCH,
-  contactTopics,
-  productPriceRanges,
-  retailerBusinessTypes,
-  retailerProposals,
-} from "@/lib/forms/types";
-import { franchise } from "@/content/site";
+import { type FormId, HELP_CHOOSE_BRANCH } from "@/lib/forms/types";
+import { contactTopics } from "@/content/contact";
+import { productPriceRanges } from "@/content/product-requests";
+import { retailerBusinessTypes, retailerProposals } from "@/content/partnerships";
+import { franchise } from "@/content/franchise";
 import { collectionStores } from "@/content/stores";
 import {
   contactSchema,

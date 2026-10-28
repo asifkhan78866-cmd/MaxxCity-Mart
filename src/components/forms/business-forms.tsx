@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { useState, useSyncExternalStore } from "react";
-import { indianStates, supplierCategories } from "@/content/site";
-import { contactTopics, retailerBusinessTypes, retailerProposals } from "@/lib/forms/types";
+import { indianStates } from "@/content/regions";
+import { supplierCategories } from "@/content/categories";
+import { contactTopics } from "@/content/contact";
+import { retailerBusinessTypes, retailerProposals } from "@/content/partnerships";
 import {
   ChoiceGroup,
   ConsentField,

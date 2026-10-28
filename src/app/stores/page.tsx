@@ -2,13 +2,13 @@ import { PageHero } from "@/components/page-hero";
 import { Container, JsonLd, SectionHeading } from "@/components/ui/layout";
 import { StoreCard } from "@/components/sections/store-card";
 import { LocationInterestForm } from "@/components/forms/business-forms";
-import { openStores, stores } from "@/content/stores";
+import { openStores, shortLocation, stores } from "@/content/stores";
 import { allStoresJsonLd, pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "Find a Store in Adilabad",
   description:
-    "Find MaxxCity Mart stores. Visit our ₹99 fixed-price variety store on Adilabad Main Road, Mavala, Adilabad, Telangana, or ask us to open in your town.",
+    `Find MaxxCity Mart stores. Visit our ₹99 fixed-price variety store on ${openStores.map(shortLocation).join("; ")}, or ask us to open in your town.`,
   path: "/stores",
 });
 

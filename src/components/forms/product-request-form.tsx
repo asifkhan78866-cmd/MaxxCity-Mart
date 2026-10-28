@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import { collectionStores } from "@/content/stores";
-import { HELP_CHOOSE_BRANCH, productPriceRanges } from "@/lib/forms/types";
+import { HELP_CHOOSE_BRANCH } from "@/lib/forms/types";
+import { productPriceRanges } from "@/content/product-requests";
 import {
   ConsentField,
   EnquiryForm,

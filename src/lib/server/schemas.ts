@@ -1,14 +1,13 @@
 import "server-only";
 import { z } from "zod";
-import { franchise, indianStates, supplierCategories } from "@/content/site";
+import { franchise } from "@/content/franchise";
+import { indianStates } from "@/content/regions";
+import { supplierCategories } from "@/content/categories";
+import { HELP_CHOOSE_BRANCH } from "@/lib/forms/types";
+import { contactTopics } from "@/content/contact";
+import { productPriceRanges } from "@/content/product-requests";
+import { retailerBusinessTypes, retailerProposals } from "@/content/partnerships";
 import { collectionStores } from "@/content/stores";
-import {
-  HELP_CHOOSE_BRANCH,
-  contactTopics,
-  productPriceRanges,
-  retailerBusinessTypes,
-  retailerProposals,
-} from "@/lib/forms/types";
 
 /* ---------- Field building blocks ---------- */
 
@@ -68,7 +67,7 @@ const optionalUrl = z
 const oneOf = <T extends readonly { value: string }[]>(options: T, message: string) =>
   z.enum(options.map((o) => o.value) as [string, ...string[]], { error: message });
 
-const state = z.enum(indianStates as unknown as [string, ...string[]], { error: "Please choose a state." });
+const state = z.enum(indianStates, { error: "Please choose a state." });
 
 const consent = z.literal("yes", { error: "Please tick the box to confirm." }).transform(() => true);
 
@@ -126,7 +125,7 @@ export const manufacturerSchema = z.object({
   email: requiredEmail,
   location: required("your manufacturing location", 200),
   categories: z
-    .array(z.enum(supplierCategories as unknown as [string, ...string[]]))
+    .array(z.enum(supplierCategories))
     .min(1, "Please choose at least one product category."),
   productDescription: required("a short description of your products", 2000, 10),
   websiteUrl: optionalUrl,
