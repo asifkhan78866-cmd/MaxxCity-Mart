@@ -1,14 +1,7 @@
 import type { Metadata } from "next";
 import { site, contact } from "@/content/site";
 import { openStores, type Store } from "@/content/stores";
-
-function resolveSiteUrl() {
-  const explicit = process.env.NEXT_PUBLIC_SITE_URL;
-  if (explicit) return explicit.replace(/\/$/, "");
-  const vercel = process.env.VERCEL_PROJECT_PRODUCTION_URL;
-  if (vercel) return `https://${vercel}`;
-  return "http://localhost:3000";
-}
+import { resolveSiteUrl } from "@/lib/config/public-env";
 
 export const siteUrl = resolveSiteUrl();
 export const absoluteUrl = (path = "/") => `${siteUrl}${path === "/" ? "" : path}`;

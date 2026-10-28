@@ -4,25 +4,39 @@ import { mkdir, readFile, appendFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import type { PreparedFile } from "@/lib/server/files";
+import { localStoreEnv, supabaseEnv } from "@/lib/config/env";
 
-const BUCKET = process.env.SUPABASE_STORAGE_BUCKET || "enquiry-uploads";
 const SIGNED_URL_SECONDS = 60 * 60 * 24 * 7;
 
-let client: SupabaseClient | null = null;
+let cached: { key: string; client: SupabaseClient } | null = null;
 
 function supabase() {
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) return null;
-  client ??= createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
-  return client;
+  const env = supabaseEnv();
+  if (env.status !== "configured") return null;
+  const { url, secretKey, bucket } = env.config;
+  if (cached?.key !== `${url}|${secretKey}`) {
+    cached = {
+      key: `${url}|${secretKey}`,
+      client: createClient(url, secretKey, { auth: { persistSession: false, autoRefreshToken: false } }),
+    };
+  }
+  return { db: cached.client, bucket };
 }
 
-/** "supabase" in production; "local" (JSON files in .data/) only during development. */
+/**
+ * Where submissions go: Supabase when configured; JSON files only in local
+ * development and tests; otherwise nowhere, and the API refuses submissions.
+ * A half-configured Supabase is treated as unavailable everywhere, so a
+ * missing key can never silently divert real submissions to local files.
+ */
 export function storageMode(): "supabase" | "local" | "unavailable" {
-  if (supabase()) return "supabase";
-  if (process.env.NODE_ENV !== "production") return "local";
-  return "unavailable";
+  const env = supabaseEnv();
+  if (env.status === "configured") return "supabase";
+  if (env.status === "incomplete") {
+    console.error(`[storage] Supabase is only partly configured; missing ${env.missing.join(", ")}.`);
+    return "unavailable";
+  }
+  return localStoreEnv().allowed ? "local" : "unavailable";
 }
 
 const ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -66,7 +80,7 @@ async function findBySubmission(db: SupabaseClient, table: string, submissionId:
 }
 
 async function persistSupabase({ form, table, prefix, submissionId, data, file }: PersistInput): Promise<PersistResult> {
-  const db = supabase()!;
+  const { db, bucket } = supabase()!;
 
   const existing = await findBySubmission(db, table, submissionId);
   if (existing) return { reference: existing, duplicate: true, fileLink: null };
@@ -82,7 +96,7 @@ async function persistSupabase({ form, table, prefix, submissionId, data, file }
     if (file) {
       const month = new Date().toISOString().slice(0, 7);
       uploadedPath = `${form}/${month}/${reference}/${randomUUID()}.${file.prepared.extension}`;
-      const up = await db.storage.from(BUCKET).upload(uploadedPath, file.prepared.bytes, {
+      const up = await db.storage.from(bucket).upload(uploadedPath, file.prepared.bytes, {
         contentType: file.prepared.contentType,
         upsert: false,
       });
@@ -93,12 +107,12 @@ async function persistSupabase({ form, table, prefix, submissionId, data, file }
 
     const insert = await db.from(table).insert(row);
     if (!insert.error) {
-      return { reference, duplicate: false, fileLink: uploadedPath ? await signedLink(db, uploadedPath) : null };
+      return { reference, duplicate: false, fileLink: uploadedPath ? await signedLink(db, bucket, uploadedPath) : null };
     }
 
     // Never leave an orphaned file behind a failed insert.
     if (uploadedPath) {
-      const removed = await db.storage.from(BUCKET).remove([uploadedPath]);
+      const removed = await db.storage.from(bucket).remove([uploadedPath]);
       if (removed.error) console.error(`[storage] Could not remove orphaned upload ${uploadedPath}: ${removed.error.message}`);
     }
     if (insert.error.code !== UNIQUE_VIOLATION) {
@@ -113,9 +127,9 @@ async function persistSupabase({ form, table, prefix, submissionId, data, file }
 }
 
 /** Private, expiring link for the notification email. PDFs download rather than open in the browser. */
-async function signedLink(db: SupabaseClient, filePath: string) {
+async function signedLink(db: SupabaseClient, bucket: string, filePath: string) {
   const options = filePath.endsWith(".pdf") ? { download: true } : undefined;
-  const { data, error } = await db.storage.from(BUCKET).createSignedUrl(filePath, SIGNED_URL_SECONDS, options);
+  const { data, error } = await db.storage.from(bucket).createSignedUrl(filePath, SIGNED_URL_SECONDS, options);
   if (error) console.error(`[storage] Could not sign ${filePath}: ${error.message}`);
   return data?.signedUrl ?? null;
 }
@@ -123,7 +137,7 @@ async function signedLink(db: SupabaseClient, filePath: string) {
 /* ---------- Development fallback: newline-delimited JSON in .data/ (git-ignored) ---------- */
 
 async function persistLocal({ form, table, prefix, submissionId, data, file }: PersistInput): Promise<PersistResult> {
-  const LOCAL_DIR = process.env.LOCAL_SUBMISSIONS_DIR || path.join(process.cwd(), ".data");
+  const LOCAL_DIR = localStoreEnv().dir ?? path.join(process.cwd(), ".data");
   await mkdir(LOCAL_DIR, { recursive: true });
   const logFile = path.join(LOCAL_DIR, `${table}.jsonl`);
   const prior = await readFile(logFile, "utf8").catch(() => "");

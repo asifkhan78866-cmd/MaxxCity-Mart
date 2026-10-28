@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { CONSENT_KEY } from "@/lib/analytics";
+import { analyticsConfigured, publicEnv } from "@/lib/config/public-env";
 
-const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "";
-const PLAUSIBLE_DOMAIN = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN ?? "";
-export const analyticsConfigured = Boolean(GA_ID || PLAUSIBLE_DOMAIN);
+const GA_ID = publicEnv.gaMeasurementId;
+const PLAUSIBLE_DOMAIN = publicEnv.plausibleDomain;
 
 type Consent = "granted" | "denied" | null;
 const CHANGE = "mcm-consent-change";

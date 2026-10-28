@@ -7,6 +7,7 @@ import { ConsentBanner } from "@/components/consent";
 import { JsonLd } from "@/components/ui/layout";
 import { site } from "@/content/site";
 import { defaultOgImage, organizationJsonLd, siteUrl, websiteJsonLd } from "@/lib/seo";
+import { publicEnv } from "@/lib/config/public-env";
 import "./globals.css";
 
 const figtree = Figtree({ subsets: ["latin"], variable: "--font-figtree", display: "swap" });
@@ -27,9 +28,7 @@ export const metadata: Metadata = {
     images: [defaultOgImage],
   },
   twitter: { card: "summary_large_image" },
-  verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
-    ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
-    : undefined,
+  verification: publicEnv.googleSiteVerification ? { google: publicEnv.googleSiteVerification } : undefined,
   formatDetection: { telephone: false },
 };
 

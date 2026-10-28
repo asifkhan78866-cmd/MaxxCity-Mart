@@ -1,4 +1,5 @@
 import "server-only";
+import { emailEnv } from "@/lib/config/env";
 
 type NotifyInput = {
   subject: string;
@@ -25,10 +26,12 @@ const show = (v: unknown) => {
  * Returns "sent" only when Resend accepts the message.
  */
 export async function notifyBusiness(input: NotifyInput): Promise<NotifyOutcome> {
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.NOTIFY_EMAIL_TO;
-  const from = process.env.NOTIFY_EMAIL_FROM;
-  if (!apiKey || !to || !from) return "not-configured";
+  const env = emailEnv();
+  if (env.status === "incomplete") {
+    console.error(`[notify] Email is only partly configured; missing ${env.missing.join(", ")}.`);
+  }
+  if (env.status !== "configured") return "not-configured";
+  const { apiKey, to, from } = env.config;
 
   const rows = input.fields
     .map(
@@ -57,7 +60,7 @@ export async function notifyBusiness(input: NotifyInput): Promise<NotifyOutcome>
       headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         from,
-        to: to.split(",").map((s) => s.trim()).filter(Boolean),
+        to,
         subject: input.subject,
         html,
         text,
