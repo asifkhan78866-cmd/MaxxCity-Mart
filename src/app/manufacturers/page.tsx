@@ -2,7 +2,7 @@ import { PageHero } from "@/components/page-hero";
 import { Container, Notice, SectionHeading } from "@/components/ui/layout";
 import { ButtonLink } from "@/components/ui/button";
 import { Steps } from "@/components/sections/steps";
-import { ManufacturerForm } from "@/components/forms/business-forms";
+import { ManufacturerForm } from "@/features/manufacturers/manufacturer-form";
 import { supplierCategories } from "@/content/categories";
 import { manufacturerProcess } from "@/content/partnerships";
 import { pageMetadata } from "@/lib/seo";

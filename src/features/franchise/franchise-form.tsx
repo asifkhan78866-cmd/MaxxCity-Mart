@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { franchise } from "@/content/franchise";
 import { indianStates } from "@/content/regions";
 import {
@@ -13,6 +12,7 @@ import {
   TextArea,
   TextField,
 } from "@/components/forms/form-kit";
+import { LegalLink } from "@/components/forms/enquiry-copy";
 
 export function FranchiseForm() {
   return (
@@ -87,13 +87,9 @@ export function FranchiseForm() {
       <ConsentField>
         I agree to be contacted by MaxxCity Mart about this franchise enquiry by phone, WhatsApp or email. I
         understand this is an enquiry, not an approved application, and I have read the{" "}
-        <Link href="/legal/franchise-disclaimer" className="font-semibold text-brand-blue underline underline-offset-4">
-          franchise enquiry disclaimer
-        </Link>{" "}
+        <LegalLink href="/legal/franchise-disclaimer">franchise enquiry disclaimer</LegalLink>{" "}
         and{" "}
-        <Link href="/legal/privacy" className="font-semibold text-brand-blue underline underline-offset-4">
-          privacy policy
-        </Link>
+        <LegalLink href="/legal/privacy">privacy policy</LegalLink>
         .
       </ConsentField>
     </EnquiryForm>

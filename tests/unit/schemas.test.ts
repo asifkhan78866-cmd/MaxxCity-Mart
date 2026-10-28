@@ -1,12 +1,17 @@
 import { describe, expect, it } from "vitest";
-import {
-  contactSchema,
-  franchiseSchema,
-  locationInterestSchema,
-  manufacturerSchema,
-  productRequestSchema,
-  retailerSchema,
-} from "@/lib/server/schemas";
+import { contactForm } from "@/features/contact/definition";
+import { franchiseForm } from "@/features/franchise/definition";
+import { manufacturerForm } from "@/features/manufacturers/definition";
+import { productRequestForm } from "@/features/product-requests/definition";
+import { retailerForm } from "@/features/retailers/definition";
+import { locationInterestForm } from "@/features/stores/definition";
+
+const contactSchema = contactForm.schema;
+const franchiseSchema = franchiseForm.schema;
+const manufacturerSchema = manufacturerForm.schema;
+const productRequestSchema = productRequestForm.schema;
+const retailerSchema = retailerForm.schema;
+const locationInterestSchema = locationInterestForm.schema;
 import { validPayloads } from "../support/fixtures";
 
 const issues = (result: { success: boolean; error?: { issues: { path: PropertyKey[] }[] } }) =>

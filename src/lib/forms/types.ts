@@ -22,5 +22,3 @@ export const uploadLimits = {
   imageTypes: ["image/jpeg", "image/png", "image/webp"],
   catalogueTypes: ["application/pdf", "image/jpeg", "image/png", "image/webp"],
 } as const;
-
-export const HELP_CHOOSE_BRANCH = "help-me-choose";

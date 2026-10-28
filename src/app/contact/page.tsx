@@ -5,7 +5,7 @@ import { Container, SectionHeading } from "@/components/ui/layout";
 import { buttonClasses } from "@/components/ui/button";
 import { TrackedLink } from "@/components/ui/tracked-link";
 import { StoreCard } from "@/components/sections/store-card";
-import { ContactForm } from "@/components/forms/business-forms";
+import { ContactForm } from "@/features/contact/contact-form";
 import { contact } from "@/content/contact";
 import { openStores } from "@/content/stores";
 import { telHref, whatsappHref } from "@/lib/links";

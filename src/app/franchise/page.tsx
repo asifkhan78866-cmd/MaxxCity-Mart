@@ -6,7 +6,7 @@ import { TrackedLink } from "@/components/ui/tracked-link";
 import { Steps } from "@/components/sections/steps";
 import { CtaBand } from "@/components/sections/cta-band";
 import { FaqList } from "@/components/sections/faq-list";
-import { FranchiseForm } from "@/components/forms/franchise-form";
+import { FranchiseForm } from "@/features/franchise/franchise-form";
 import { contact } from "@/content/contact";
 import { franchise, franchiseeResponsibilities, franchiseProcess, franchiseSupport } from "@/content/franchise";
 import { faqs } from "@/content/faqs";

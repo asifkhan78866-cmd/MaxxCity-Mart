@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { Container, Notice } from "@/components/ui/layout";
-import { ProductRequestForm } from "@/components/forms/product-request-form";
+import { ProductRequestForm } from "@/features/product-requests/product-request-form";
 import { productRequestSteps } from "@/content/product-requests";
 import { pageMetadata } from "@/lib/seo";
 

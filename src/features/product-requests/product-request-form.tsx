@@ -1,9 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { collectionStores } from "@/content/stores";
-import { HELP_CHOOSE_BRANCH } from "@/lib/forms/types";
+import { HELP_CHOOSE_BRANCH } from "./constants";
 import { productPriceRanges } from "@/content/product-requests";
 import {
   ConsentField,
@@ -15,6 +14,7 @@ import {
   TextField,
 } from "@/components/forms/form-kit";
 import { UploadField } from "@/components/forms/upload-field";
+import { LegalLink } from "@/components/forms/enquiry-copy";
 
 export function ProductRequestForm() {
   const [branch, setBranch] = useState(collectionStores.length === 1 ? collectionStores[0]!.slug : "");
@@ -117,13 +117,9 @@ export function ProductRequestForm() {
       <ConsentField>
         I agree to be contacted about this request, and I understand that a product request is not an order and
         does not guarantee availability or price. I have read the{" "}
-        <Link href="/legal/product-request-terms" className="font-semibold text-brand-blue underline underline-offset-4">
-          product request terms
-        </Link>{" "}
+        <LegalLink href="/legal/product-request-terms">product request terms</LegalLink>{" "}
         and{" "}
-        <Link href="/legal/privacy" className="font-semibold text-brand-blue underline underline-offset-4">
-          privacy policy
-        </Link>
+        <LegalLink href="/legal/privacy">privacy policy</LegalLink>
         .
       </ConsentField>
     </EnquiryForm>

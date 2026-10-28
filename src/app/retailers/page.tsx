@@ -1,7 +1,7 @@
 import { PageHero } from "@/components/page-hero";
 import { Container, Notice, SectionHeading } from "@/components/ui/layout";
 import { ButtonLink } from "@/components/ui/button";
-import { RetailerForm } from "@/components/forms/business-forms";
+import { RetailerForm } from "@/features/retailers/retailer-form";
 import { retailerProposals } from "@/content/partnerships";
 import { pageMetadata } from "@/lib/seo";
 

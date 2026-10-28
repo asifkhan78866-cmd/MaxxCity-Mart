@@ -1,12 +1,12 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { forms, notificationFields } from "@/lib/server/registry";
+import { notificationFields } from "@/lib/forms/define-form";
+import { forms } from "@/lib/forms/registry";
 import { notifyBusiness } from "@/lib/email/notify-business";
-import { franchiseSchema } from "@/lib/server/schemas";
 import { validPayloads } from "../support/fixtures";
 
 describe("notification email content", () => {
   it("shows the option labels the visitor chose, not internal codes", () => {
-    const data = franchiseSchema.parse(validPayloads.franchise);
+    const data = forms.franchise.schema.parse(validPayloads.franchise);
     const rows = Object.fromEntries(notificationFields(forms.franchise, data));
     expect(rows["Commercial property"]).toBe("Yes — I have a property I can lease or rent");
     expect(rows["Investment readiness"]).toMatch(/exploring/i);
