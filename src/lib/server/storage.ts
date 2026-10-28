@@ -56,46 +56,68 @@ export async function persistSubmission(input: PersistInput): Promise<PersistRes
   throw new Error("Submission storage is not configured");
 }
 
+const UNIQUE_VIOLATION = "23505";
+const MAX_REFERENCE_ATTEMPTS = 3;
+
+async function findBySubmission(db: SupabaseClient, table: string, submissionId: string) {
+  const { data, error } = await db.from(table).select("reference").eq("submission_id", submissionId).maybeSingle();
+  if (error) throw new Error(`Lookup in ${table} failed: ${error.message}`);
+  return (data as { reference: string } | null)?.reference ?? null;
+}
+
 async function persistSupabase({ form, table, prefix, submissionId, data, file }: PersistInput): Promise<PersistResult> {
   const db = supabase()!;
 
-  const existing = await db.from(table).select("reference").eq("submission_id", submissionId).maybeSingle();
-  if (existing.data?.reference) return { reference: existing.data.reference, duplicate: true, fileLink: null };
+  const existing = await findBySubmission(db, table, submissionId);
+  if (existing) return { reference: existing, duplicate: true, fileLink: null };
 
-  const reference = makeReference(prefix);
-  const row: Record<string, unknown> = { reference, submission_id: submissionId, status: "new" };
-  for (const [k, v] of Object.entries(data)) row[snake(k)] = v;
+  const fields: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(data)) fields[snake(k)] = v;
 
-  let uploadedPath: string | null = null;
-  if (file) {
-    const month = new Date().toISOString().slice(0, 7);
-    uploadedPath = `${form}/${month}/${reference}/${randomUUID()}.${file.prepared.extension}`;
-    const up = await db.storage.from(BUCKET).upload(uploadedPath, file.prepared.bytes, {
-      contentType: file.prepared.contentType,
-      upsert: false,
-    });
-    if (up.error) throw new Error(`Upload failed: ${up.error.message}`);
-    row[file.column] = uploadedPath;
-    row[`${file.column.replace(/_path$/, "")}_original_name`] = file.prepared.originalName;
-  }
+  for (let attempt = 1; attempt <= MAX_REFERENCE_ATTEMPTS; attempt++) {
+    const reference = makeReference(prefix);
+    const row: Record<string, unknown> = { ...fields, reference, submission_id: submissionId, status: "new" };
 
-  const insert = await db.from(table).insert(row);
-  if (insert.error) {
-    if (uploadedPath) await db.storage.from(BUCKET).remove([uploadedPath]);
-    // A retry of the same submission raced us: return the reference already saved.
-    if (insert.error.code === "23505") {
-      const again = await db.from(table).select("reference").eq("submission_id", submissionId).maybeSingle();
-      if (again.data?.reference) return { reference: again.data.reference, duplicate: true, fileLink: null };
+    let uploadedPath: string | null = null;
+    if (file) {
+      const month = new Date().toISOString().slice(0, 7);
+      uploadedPath = `${form}/${month}/${reference}/${randomUUID()}.${file.prepared.extension}`;
+      const up = await db.storage.from(BUCKET).upload(uploadedPath, file.prepared.bytes, {
+        contentType: file.prepared.contentType,
+        upsert: false,
+      });
+      if (up.error) throw new Error(`Upload failed: ${up.error.message}`);
+      row[file.column] = uploadedPath;
+      row[`${file.column.replace(/_path$/, "")}_original_name`] = file.prepared.originalName;
     }
-    throw new Error(`Insert into ${table} failed: ${insert.error.message}`);
-  }
 
-  let fileLink: string | null = null;
-  if (uploadedPath) {
-    const signed = await db.storage.from(BUCKET).createSignedUrl(uploadedPath, SIGNED_URL_SECONDS);
-    fileLink = signed.data?.signedUrl ?? null;
+    const insert = await db.from(table).insert(row);
+    if (!insert.error) {
+      return { reference, duplicate: false, fileLink: uploadedPath ? await signedLink(db, uploadedPath) : null };
+    }
+
+    // Never leave an orphaned file behind a failed insert.
+    if (uploadedPath) {
+      const removed = await db.storage.from(BUCKET).remove([uploadedPath]);
+      if (removed.error) console.error(`[storage] Could not remove orphaned upload ${uploadedPath}: ${removed.error.message}`);
+    }
+    if (insert.error.code !== UNIQUE_VIOLATION) {
+      throw new Error(`Insert into ${table} failed: ${insert.error.message}`);
+    }
+    // A retry of the same submission raced us: return the reference already saved.
+    const raced = await findBySubmission(db, table, submissionId);
+    if (raced) return { reference: raced, duplicate: true, fileLink: null };
+    // Otherwise the generated reference collided with an existing one; try a new one.
   }
-  return { reference, duplicate: false, fileLink };
+  throw new Error(`Could not allocate a unique reference in ${table}`);
+}
+
+/** Private, expiring link for the notification email. PDFs download rather than open in the browser. */
+async function signedLink(db: SupabaseClient, filePath: string) {
+  const options = filePath.endsWith(".pdf") ? { download: true } : undefined;
+  const { data, error } = await db.storage.from(BUCKET).createSignedUrl(filePath, SIGNED_URL_SECONDS, options);
+  if (error) console.error(`[storage] Could not sign ${filePath}: ${error.message}`);
+  return data?.signedUrl ?? null;
 }
 
 /* ---------- Development fallback: newline-delimited JSON in .data/ (git-ignored) ---------- */
