@@ -155,6 +155,23 @@ describe("abuse protection", () => {
     expect((await send("contact", req)).status).toBe(403);
   });
 
+  it("accepts a same-site submission arriving through a proxy", async () => {
+    const req = await formRequest("contact", validPayloads.contact, { origin: "https://maxxcity.example" });
+    req.headers.set("x-forwarded-host", "maxxcity.example");
+    expect((await send("contact", req)).status).toBe(201);
+  });
+
+  it("requires a declared body size", async () => {
+    const req = await formRequest("contact", validPayloads.contact, { omitContentLength: true });
+    expect((await send("contact", req)).status).toBe(411);
+  });
+
+  it("rejects bodies over the upload limit before reading them", async () => {
+    const req = await formRequest("contact", validPayloads.contact);
+    req.headers.set("content-length", String(5 * 1024 * 1024));
+    expect((await send("contact", req)).status).toBe(413);
+  });
+
   it("rate-limits repeated submissions from one address", async () => {
     const statuses: number[] = [];
     for (let i = 0; i < 12; i++) {
@@ -172,7 +189,7 @@ describe("production safety", () => {
     const { status, body } = await send("contact", await formRequest("contact", validPayloads.contact));
     expect(status).toBe(503);
     expect(body.ok).toBe(false);
-    expect(String(body.message)).toMatch(/call or WhatsApp/);
+    expect(String(body.message)).toMatch(/call or WhatsApp us on \+91 91007 70398/);
     expect(await readdir(dir)).toEqual(before);
   });
 });

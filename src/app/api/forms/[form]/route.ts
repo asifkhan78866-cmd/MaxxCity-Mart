@@ -5,12 +5,12 @@ import { clientIp, rateLimit } from "@/lib/server/rate-limit";
 import { prepareUpload, UploadError, type PreparedFile } from "@/lib/server/files";
 import { persistSubmission, storageMode } from "@/lib/server/storage";
 import { notifyBusiness } from "@/lib/server/notify";
+import { contact } from "@/content/site";
 
 const MAX_BODY_BYTES = 4.5 * 1024 * 1024;
 const MIN_FILL_MS = 2500;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-const SERVICE_DOWN =
-  "Online submissions are temporarily unavailable. Please call or WhatsApp us on +91 91007 70398.";
+const SERVICE_DOWN = `Online submissions are temporarily unavailable. Please call or WhatsApp us on ${contact.phoneDisplay}.`;
 
 const reply = (body: SubmitResult, status: number, headers?: HeadersInit) =>
   Response.json(body, { status, headers: { "Cache-Control": "no-store", ...headers } });
@@ -23,13 +23,21 @@ export async function POST(request: NextRequest, ctx: RouteContext<"/api/forms/[
   const config = forms[form as FormId];
 
   // Same-origin check: browsers always send Origin on cross-site POSTs.
+  // Behind a proxy, the public host arrives in x-forwarded-host.
   const origin = request.headers.get("origin");
-  if (origin && URL.parse(origin)?.host !== request.headers.get("host")) {
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
+  if (origin && URL.parse(origin)?.host !== host) {
     return reply({ ok: false, message: "This form can only be submitted from the MaxxCity Mart website." }, 403);
   }
 
-  const length = Number(request.headers.get("content-length") ?? 0);
-  if (length > MAX_BODY_BYTES) {
+  // Browsers always declare the body size for form uploads. Requiring it means
+  // the size limit below cannot be sidestepped with a streamed (chunked) body.
+  const declared = request.headers.get("content-length");
+  if (declared === null) {
+    return reply({ ok: false, message: "Please refresh the page and try again." }, 411);
+  }
+  const length = Number(declared);
+  if (!Number.isFinite(length) || length > MAX_BODY_BYTES) {
     return reply({ ok: false, message: "The upload is too large. Please choose a file under 4 MB." }, 413);
   }
 
