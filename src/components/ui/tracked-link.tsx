@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { ComponentProps } from "react";
-import { track, type AnalyticsEvent } from "@/lib/analytics";
+import { type AnalyticsEvent, track } from "@/lib/analytics/track";
 
 type Props = ComponentProps<"a"> & {
   href: string;

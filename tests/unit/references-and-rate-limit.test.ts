@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { makeReference } from "@/lib/server/storage";
-import { clientIp, rateLimit } from "@/lib/server/rate-limit";
+import { makeReference } from "@/lib/storage/references";
+import { clientIp, rateLimit } from "@/lib/security/rate-limit";
 
 describe("makeReference", () => {
   it("uses the prefix, the India date and an unambiguous code", () => {

@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { emailEnv, localStoreEnv, supabaseEnv } from "@/lib/config/env";
 import { resolveSiteUrl } from "@/lib/config/public-env";
-import { storageMode } from "@/lib/server/storage";
+import { storageMode } from "@/lib/storage/submissions";
 
 afterEach(() => {
   vi.unstubAllEnvs();

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState, useSyncExternalStore } from "react";
-import { CONSENT_KEY } from "@/lib/analytics";
+import { CONSENT_KEY } from "@/lib/analytics/track";
 import { analyticsConfigured, publicEnv } from "@/lib/config/public-env";
 
 const GA_ID = publicEnv.gaMeasurementId;

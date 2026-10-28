@@ -4,7 +4,7 @@ import { useEffect, useId, useRef, useState, type DragEvent } from "react";
 import { FileText, ImagePlus, Loader2, RefreshCw, Trash2 } from "lucide-react";
 import { useFormKit, FieldMessage } from "@/components/forms/form-kit";
 import { uploadLimits } from "@/lib/forms/types";
-import { track } from "@/lib/analytics";
+import { track } from "@/lib/analytics/track";
 
 const MAX_PICK_BYTES = 20 * 1024 * 1024;
 

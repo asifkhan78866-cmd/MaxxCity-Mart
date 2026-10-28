@@ -65,7 +65,7 @@ const fake = vi.hoisted(() => {
 
 vi.mock("@supabase/supabase-js", () => ({ createClient: () => fake.client }));
 
-const { persistSubmission, storageMode } = await import("@/lib/server/storage");
+const { persistSubmission, storageMode } = await import("@/lib/storage/submissions");
 
 const photo = { bytes: Buffer.from([1, 2, 3]), contentType: "image/jpeg", extension: "jpg", originalName: "IMG_1.jpg" };
 const pdf = { bytes: Buffer.from("%PDF-"), contentType: "application/pdf", extension: "pdf", originalName: "cat.pdf" };

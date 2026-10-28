@@ -1,6 +1,6 @@
 import sharp from "sharp";
 import { describe, expect, it } from "vitest";
-import { prepareUpload, UploadError } from "@/lib/server/files";
+import { prepareUpload, UploadError } from "@/lib/security/uploads";
 import { file, jpegWithExif, transparentPng } from "../support/fixtures";
 
 describe("prepareUpload", () => {

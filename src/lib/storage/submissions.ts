@@ -1,27 +1,14 @@
 import "server-only";
-import { randomInt, randomUUID } from "node:crypto";
+import { randomUUID } from "node:crypto";
 import { mkdir, readFile, appendFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import type { PreparedFile } from "@/lib/server/files";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { localStoreEnv, supabaseEnv } from "@/lib/config/env";
+import type { PreparedFile } from "@/lib/security/uploads";
+import { supabaseAdmin } from "@/lib/supabase/admin-client";
+import { makeReference } from "@/lib/storage/references";
 
 const SIGNED_URL_SECONDS = 60 * 60 * 24 * 7;
-
-let cached: { key: string; client: SupabaseClient } | null = null;
-
-function supabase() {
-  const env = supabaseEnv();
-  if (env.status !== "configured") return null;
-  const { url, secretKey, bucket } = env.config;
-  if (cached?.key !== `${url}|${secretKey}`) {
-    cached = {
-      key: `${url}|${secretKey}`,
-      client: createClient(url, secretKey, { auth: { persistSession: false, autoRefreshToken: false } }),
-    };
-  }
-  return { db: cached.client, bucket };
-}
 
 /**
  * Where submissions go: Supabase when configured; JSON files only in local
@@ -37,17 +24,6 @@ export function storageMode(): "supabase" | "local" | "unavailable" {
     return "unavailable";
   }
   return localStoreEnv().allowed ? "local" : "unavailable";
-}
-
-const ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-
-/** Human-friendly reference, e.g. FR-261029-K7Q2M. Contains no personal data. */
-export function makeReference(prefix: string, now = new Date()) {
-  const ist = new Date(now.getTime() + 5.5 * 60 * 60 * 1000);
-  const date = ist.toISOString().slice(2, 10).replace(/-/g, "");
-  let code = "";
-  for (let i = 0; i < 5; i++) code += ALPHABET[randomInt(ALPHABET.length)];
-  return `${prefix}-${date}-${code}`;
 }
 
 const snake = (key: string) => key.replace(/[A-Z]/g, (m) => `_${m.toLowerCase()}`);
@@ -80,7 +56,7 @@ async function findBySubmission(db: SupabaseClient, table: string, submissionId:
 }
 
 async function persistSupabase({ form, table, prefix, submissionId, data, file }: PersistInput): Promise<PersistResult> {
-  const { db, bucket } = supabase()!;
+  const { db, bucket } = supabaseAdmin()!;
 
   const existing = await findBySubmission(db, table, submissionId);
   if (existing) return { reference: existing, duplicate: true, fileLink: null };

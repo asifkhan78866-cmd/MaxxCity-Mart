@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { forms, notificationFields } from "@/lib/server/registry";
-import { notifyBusiness } from "@/lib/server/notify";
+import { notifyBusiness } from "@/lib/email/notify-business";
 import { franchiseSchema } from "@/lib/server/schemas";
 import { validPayloads } from "../support/fixtures";
 
