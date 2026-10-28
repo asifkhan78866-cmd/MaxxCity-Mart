@@ -100,9 +100,8 @@ async function persistSupabase({ form, table, prefix, submissionId, data, file }
 
 /* ---------- Development fallback: newline-delimited JSON in .data/ (git-ignored) ---------- */
 
-const LOCAL_DIR = path.join(process.cwd(), ".data");
-
 async function persistLocal({ form, table, prefix, submissionId, data, file }: PersistInput): Promise<PersistResult> {
+  const LOCAL_DIR = process.env.LOCAL_SUBMISSIONS_DIR || path.join(process.cwd(), ".data");
   await mkdir(LOCAL_DIR, { recursive: true });
   const logFile = path.join(LOCAL_DIR, `${table}.jsonl`);
   const prior = await readFile(logFile, "utf8").catch(() => "");
