@@ -18,7 +18,7 @@ const suggestions = [
 export default function NotFound() {
   return (
     <Container className="py-20 sm:py-28">
-      <p className="font-display text-sm font-bold uppercase tracking-[0.16em] text-brand-green">Error 404</p>
+      <p className="font-display text-sm font-bold uppercase tracking-[0.16em] text-brand-green-text">Error 404</p>
       <h1 className="mt-3 font-display text-4xl font-bold text-ink sm:text-5xl">We couldn&apos;t find that page</h1>
       <p className="mt-4 max-w-xl text-lg text-ink-soft">
         The link may be out of date, or the page may have moved. Try one of these instead:

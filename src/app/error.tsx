@@ -20,7 +20,7 @@ export default function Error({ error, retry }: { error: unknown; retry: () => v
 
   return (
     <Container className="py-20 sm:py-28">
-      <p className="font-display text-sm font-bold uppercase tracking-[0.16em] text-brand-green">Something went wrong</p>
+      <p className="font-display text-sm font-bold uppercase tracking-[0.16em] text-brand-green-text">Something went wrong</p>
       <h1 className="mt-3 font-display text-4xl font-bold text-ink sm:text-5xl">This page didn&apos;t load properly</h1>
       <p className="mt-4 max-w-xl text-lg text-ink-soft">
         Please try again. If it keeps happening, call or WhatsApp us on{" "}

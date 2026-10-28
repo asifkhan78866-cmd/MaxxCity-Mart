@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 export function Eyebrow({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <p className={`text-xs font-semibold uppercase tracking-[0.16em] text-brand-green ${className}`}>{children}</p>
+    <p className={`text-xs font-semibold uppercase tracking-[0.16em] text-brand-green-text ${className}`}>{children}</p>
   );
 }
 

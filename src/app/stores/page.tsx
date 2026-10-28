@@ -37,7 +37,7 @@ export default function StoresPage() {
         <Container className="space-y-14 py-14 sm:py-16">
           {byCity.map(([city, list]) => (
             <div key={city}>
-              <h2 className="font-display text-sm font-semibold uppercase tracking-[0.16em] text-brand-green">{city}</h2>
+              <h2 className="font-display text-sm font-semibold uppercase tracking-[0.16em] text-brand-green-text">{city}</h2>
               <div className={`mt-5 grid gap-6 ${list.length > 1 ? "lg:grid-cols-2" : ""}`}>
                 {list.map((s) => (
                   <StoreCard key={s.slug} store={s} wide={list.length === 1} headingLevel="h3" />
@@ -47,7 +47,7 @@ export default function StoresPage() {
           ))}
           {comingSoon.length > 0 && (
             <div>
-              <h2 className="font-display text-sm font-semibold uppercase tracking-[0.16em] text-brand-green">Coming soon</h2>
+              <h2 className="font-display text-sm font-semibold uppercase tracking-[0.16em] text-brand-green-text">Coming soon</h2>
               <div className="mt-5 grid gap-6 lg:grid-cols-2">
                 {comingSoon.map((s) => (
                   <StoreCard key={s.slug} store={s} />

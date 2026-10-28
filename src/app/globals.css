@@ -7,6 +7,8 @@
   --color-brand-blue-soft: #e8f0fa;
   --color-brand-green: #0b8245;
   --color-brand-green-deep: #075c31;
+  /* Logo green darkened just enough for small text to meet WCAG AA on every page background. */
+  --color-brand-green-text: #09763e;
   --color-brand-green-soft: #e7f4ec;
   --color-brand-teal: #0c8884;
   --color-ink: #121c1f;

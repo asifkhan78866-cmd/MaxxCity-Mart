@@ -37,7 +37,7 @@ export default function FounderPage() {
         <Container className="grid gap-12 py-16 sm:py-20 md:grid-cols-[0.75fr_1.25fr] md:items-start lg:gap-16">
           <FounderPortrait className="mx-auto w-full max-w-sm md:sticky md:top-28" />
           <div>
-            <h2 id="message-heading" className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-green">
+            <h2 id="message-heading" className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-green-text">
               A message from our founder
             </h2>
             <Quote aria-hidden className="mt-6 size-12 text-brand-green" />
@@ -53,7 +53,7 @@ export default function FounderPage() {
               <ol className="mt-8 divide-y divide-line border-y border-line">
                 {direction.map((d, i) => (
                   <li key={d.title} className="reveal grid gap-1 py-5 sm:grid-cols-[3rem_1fr]">
-                    <span aria-hidden className="font-display text-sm font-bold text-brand-green">
+                    <span aria-hidden className="font-display text-sm font-bold text-brand-green-text">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <div>

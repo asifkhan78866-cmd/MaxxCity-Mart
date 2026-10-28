@@ -14,7 +14,7 @@ export function Steps({
         <li key={s.title} className="reveal">
           <span
             aria-hidden
-            className={`font-display text-sm font-bold tabular-nums ${dark ? "text-price-yellow" : "text-brand-green"}`}
+            className={`font-display text-sm font-bold tabular-nums ${dark ? "text-price-yellow" : "text-brand-green-text"}`}
           >
             {String(i + 1).padStart(2, "0")}
           </span>

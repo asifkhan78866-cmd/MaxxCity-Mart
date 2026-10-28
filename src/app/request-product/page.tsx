@@ -32,7 +32,7 @@ export default function RequestProductPage() {
             <ProductRequestForm />
           </div>
 
-          <aside aria-label="How it works" className="space-y-4 lg:sticky lg:top-28 lg:self-start">
+          <div className="space-y-4 lg:sticky lg:top-28 lg:self-start">
             <div className="rounded-2xl border border-line bg-white p-5 sm:p-6">
               <h2 className="font-display text-lg font-semibold text-ink">How it works</h2>
               <ol className="mt-4 space-y-4">
@@ -61,7 +61,7 @@ export default function RequestProductPage() {
                 Product request terms
               </Link>
             </Notice>
-          </aside>
+          </div>
         </Container>
       </section>
     </>
