@@ -52,7 +52,7 @@ describe("request guards", () => {
   });
 
   it("flags honeypot and too-fast submissions", () => {
-    const now = 1_000_000;
+    const now = Date.UTC(2026, 9, 29);
     const fd = (fields: Record<string, string>) => {
       const f = new FormData();
       Object.entries(fields).forEach(([k, v]) => f.set(k, v));
@@ -61,6 +61,21 @@ describe("request guards", () => {
     expect(checkHuman(fd({ _startedAt: String(now - 10_000) }), now)).toBeNull();
     expect(checkHuman(fd({ _startedAt: String(now - 1_000) }), now)?.status).toBe(400);
     expect(checkHuman(fd({ _startedAt: String(now - 10_000), _website: "x" }), now)?.status).toBe(400);
+  });
+
+  it("rejects a missing or implausible start time", () => {
+    const now = Date.now();
+    const fd = (startedAt?: string) => {
+      const f = new FormData();
+      if (startedAt !== undefined) f.set("_startedAt", startedAt);
+      return f;
+    };
+    expect(checkHuman(fd(), now)?.status).toBe(400);
+    expect(checkHuman(fd(""), now)?.status).toBe(400);
+    expect(checkHuman(fd("0"), now)?.status).toBe(400);
+    expect(checkHuman(fd("1"), now)?.status).toBe(400);
+    expect(checkHuman(fd(String(now + 3_600_000)), now)?.status).toBe(400);
+    expect(checkHuman(fd("12e11"), now)?.status).toBe(400);
   });
 
   it("accepts only UUID submission ids", () => {

@@ -166,6 +166,11 @@ describe("abuse protection", () => {
     expect((await send("contact", req)).status).toBe(400);
   });
 
+  it("rejects a submission with no start time", async () => {
+    const req = await formRequest("contact", validPayloads.contact, { startedAt: Number.NaN });
+    expect((await send("contact", req)).status).toBe(400);
+  });
+
   it("rejects a malformed submission id", async () => {
     const req = await formRequest("contact", validPayloads.contact, { submissionId: "abc" });
     expect((await send("contact", req)).status).toBe(400);

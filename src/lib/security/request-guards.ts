@@ -44,12 +44,17 @@ export function checkDeclaredSize(headers: Headers): Rejection | null {
   return null;
 }
 
-/** Spam checks: a hidden field people never see, and a minimum time on the form. */
+/**
+ * Spam checks: a hidden field people never see, and a minimum time on the
+ * form. The start time must be present and plausible: a missing value would
+ * otherwise read as 0 (1970) and pass the timing check.
+ */
 export function checkHuman(fd: FormData, now = Date.now()): Rejection | null {
-  const startedAt = Number(fd.get("_startedAt"));
-  if (fd.get("_website") || !Number.isFinite(startedAt) || now - startedAt < MIN_FILL_MS) {
-    return { status: 400, message: "Please check your details and press submit again." };
-  }
+  const rejection = { status: 400, message: "Please check your details and press submit again." };
+  if (fd.get("_website")) return rejection;
+  const raw = fd.get("_startedAt");
+  const startedAt = typeof raw === "string" && /^\d{13}$/.test(raw) ? Number(raw) : NaN;
+  if (!Number.isFinite(startedAt) || startedAt > now + 60_000 || now - startedAt < MIN_FILL_MS) return rejection;
   return null;
 }
 
