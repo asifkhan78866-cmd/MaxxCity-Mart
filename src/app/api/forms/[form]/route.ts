@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { formIds, type FormId, type SubmitResult } from "@/lib/forms/types";
-import { forms, displayValue } from "@/lib/server/registry";
+import { forms, notificationFields } from "@/lib/server/registry";
 import { clientIp, rateLimit } from "@/lib/server/rate-limit";
 import { prepareUpload, UploadError, type PreparedFile } from "@/lib/server/files";
 import { persistSubmission, storageMode } from "@/lib/server/storage";
@@ -134,7 +134,7 @@ export async function POST(request: NextRequest, ctx: RouteContext<"/api/forms/[
       subject: config.subject(data, saved.reference),
       formLabel: config.label,
       reference: saved.reference,
-      fields: config.fields.map(([key, label]) => [label, displayValue(key, data[key])]),
+      fields: notificationFields(config, data),
       fileLink: saved.fileLink,
       replyTo: typeof data.email === "string" ? data.email : null,
     });

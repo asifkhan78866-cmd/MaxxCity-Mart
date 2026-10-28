@@ -1,7 +1,14 @@
 import "server-only";
 import type { z } from "zod";
 import type { FormId } from "@/lib/forms/types";
-import { HELP_CHOOSE_BRANCH } from "@/lib/forms/types";
+import {
+  HELP_CHOOSE_BRANCH,
+  contactTopics,
+  productPriceRanges,
+  retailerBusinessTypes,
+  retailerProposals,
+} from "@/lib/forms/types";
+import { franchise } from "@/content/site";
 import { collectionStores } from "@/content/stores";
 import {
   contactSchema,
@@ -23,12 +30,20 @@ type FormConfig = {
   /** Extra rule needing both the parsed data and the presence of a file. */
   check?: (data: Record<string, unknown>, hasFile: boolean) => Record<string, string> | null;
   subject: (data: Record<string, unknown>, reference: string) => string;
-  /** Labels for the business notification email, in display order. */
-  fields: [key: string, label: string][];
+  /**
+   * Fields for the business notification email, in display order. Option
+   * fields list their choices so the email shows what the visitor saw.
+   */
+  fields: [key: string, label: string, options?: Options][];
 };
 
-const branchName = (slug: unknown) =>
-  slug === HELP_CHOOSE_BRANCH ? "Asked us to help choose" : (collectionStores.find((s) => s.slug === slug)?.name ?? String(slug));
+type Options = readonly { value: string; label: string }[];
+
+const branchOptions: Options = [
+  ...collectionStores.map((s) => ({ value: s.slug, label: `${s.name} (${s.locality}, ${s.city})` })),
+  { value: HELP_CHOOSE_BRANCH, label: "Asked us to help choose" },
+];
+const branchName = (slug: unknown) => branchOptions.find((o) => o.value === slug)?.label ?? String(slug);
 
 export const forms: Record<FormId, FormConfig> = {
   franchise: {
@@ -44,8 +59,8 @@ export const forms: Record<FormId, FormConfig> = {
       ["city", "City"],
       ["state", "State"],
       ["preferredLocation", "Preferred outlet location"],
-      ["propertyStatus", "Commercial property"],
-      ["investmentReadiness", "Investment readiness"],
+      ["propertyStatus", "Commercial property", franchise.propertyOptions],
+      ["investmentReadiness", "Investment readiness", franchise.investmentReadiness],
       ["experience", "Retail / business experience"],
       ["additionalInfo", "Additional information"],
     ],
@@ -67,8 +82,8 @@ export const forms: Record<FormId, FormConfig> = {
       ["productUrl", "Product link"],
       ["variant", "Colour / size / variant"],
       ["quantity", "Quantity"],
-      ["priceRange", "Expected price range"],
-      ["branch", "Collection branch"],
+      ["priceRange", "Expected price range", productPriceRanges],
+      ["branch", "Collection branch", branchOptions],
       ["preferredCity", "Customer's town or city"],
       ["name", "Name"],
       ["phone", "Mobile"],
@@ -110,9 +125,9 @@ export const forms: Record<FormId, FormConfig> = {
       ["phone", "Phone"],
       ["email", "Email"],
       ["location", "Location"],
-      ["businessType", "Business type"],
+      ["businessType", "Business type", retailerBusinessTypes],
       ["categories", "Product categories"],
-      ["proposal", "Proposed partnership"],
+      ["proposal", "Proposed partnership", retailerProposals],
       ["comments", "Comments"],
     ],
   },
@@ -126,7 +141,7 @@ export const forms: Record<FormId, FormConfig> = {
       ["name", "Name"],
       ["phone", "Mobile"],
       ["email", "Email"],
-      ["topic", "Topic"],
+      ["topic", "Topic", contactTopics],
       ["message", "Message"],
     ],
   },
@@ -146,6 +161,11 @@ export const forms: Record<FormId, FormConfig> = {
   },
 };
 
-export function displayValue(key: string, value: unknown) {
-  return key === "branch" ? branchName(value) : value;
+/** The rows for the notification email, with option codes replaced by their labels. */
+export function notificationFields(config: FormConfig, data: Record<string, unknown>): [string, unknown][] {
+  return config.fields.map(([key, label, options]) => {
+    const value = data[key];
+    const match = options?.find((o) => o.value === value);
+    return [label, match ? match.label : value];
+  });
 }
