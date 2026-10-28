@@ -3,6 +3,11 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import sharp from "sharp";
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
+
+// after() only works inside a Next.js request; collect the deferred tasks instead.
+const deferred = vi.hoisted(() => [] as (() => Promise<void> | void)[]);
+vi.mock("next/server", () => ({ after: (task: () => Promise<void> | void) => void deferred.push(task) }));
+
 import { POST } from "@/app/api/forms/[form]/route";
 import { file, jpegWithExif, validPayloads } from "../support/fixtures";
 import { formRequest, routeContext } from "../support/requests";
@@ -87,6 +92,22 @@ describe("successful submissions", () => {
     const photo = file(await jpegWithExif(), "IMG_2.jpg", "image/jpeg");
     const { status } = await send("product-request", await formRequest("product-request", { ...rest, image: photo }));
     expect(status).toBe(201);
+  });
+});
+
+describe("notifications", () => {
+  it("schedules the business email after the response, once per new submission", async () => {
+    deferred.length = 0;
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const submissionId = crypto.randomUUID();
+    await send("contact", await formRequest("contact", validPayloads.contact, { submissionId }));
+    await send("contact", await formRequest("contact", validPayloads.contact, { submissionId }));
+    expect(deferred).toHaveLength(1);
+
+    // Email is not configured in tests, and the outcome is logged truthfully.
+    await deferred[0]?.();
+    expect(warn).toHaveBeenCalledWith(expect.stringMatching(/saved; notification not-configured/));
+    warn.mockRestore();
   });
 });
 

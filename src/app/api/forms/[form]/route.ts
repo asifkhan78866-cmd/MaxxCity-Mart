@@ -1,4 +1,4 @@
-import type { NextRequest } from "next/server";
+import { after, type NextRequest } from "next/server";
 import { formIds, type FormId, type SubmitResult } from "@/lib/forms/types";
 import { forms, notificationFields } from "@/lib/server/registry";
 import { clientIp, rateLimit } from "@/lib/server/rate-limit";
@@ -130,15 +130,20 @@ export async function POST(request: NextRequest, ctx: RouteContext<"/api/forms/[
   }
 
   if (!saved.duplicate) {
-    const outcome = await notifyBusiness({
-      subject: config.subject(data, saved.reference),
-      formLabel: config.label,
-      reference: saved.reference,
-      fields: notificationFields(config, data),
-      fileLink: saved.fileLink,
-      replyTo: typeof data.email === "string" ? data.email : null,
+    const { reference, fileLink } = saved;
+    // The submission is already saved; email the business after responding so
+    // the visitor is not kept waiting on the email provider.
+    after(async () => {
+      const outcome = await notifyBusiness({
+        subject: config.subject(data, reference),
+        formLabel: config.label,
+        reference,
+        fields: notificationFields(config, data),
+        fileLink,
+        replyTo: typeof data.email === "string" ? data.email : null,
+      });
+      if (outcome !== "sent") console.warn(`[forms] ${reference} saved; notification ${outcome}.`);
     });
-    if (outcome !== "sent") console.warn(`[forms] ${saved.reference} saved; notification ${outcome}.`);
   }
 
   return reply({ ok: true, reference: saved.reference }, saved.duplicate ? 200 : 201);
