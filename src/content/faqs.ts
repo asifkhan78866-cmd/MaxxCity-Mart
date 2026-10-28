@@ -1,4 +1,10 @@
-export type Faq = { q: string; a: string; link?: { href: string; label: string } };
+export type Faq = {
+  q: string;
+  a: string;
+  link?: { href: string; label: string };
+  /** Also show on the homepage. */
+  home?: boolean;
+};
 
 export const faqs: Faq[] = [
   {
@@ -8,6 +14,7 @@ export const faqs: Faq[] = [
   },
   {
     q: "How does the ₹99 concept work?",
+    home: true,
     a: "Our range is planned around one simple price point, so you can pick up everyday essentials and know what you are paying at a glance. The range, price points and offers displayed in store at the time of purchase are the ones that apply.",
   },
   {
@@ -16,6 +23,7 @@ export const faqs: Faq[] = [
   },
   {
     q: "Can I request a product by sending a picture?",
+    home: true,
     a: "Yes. Upload a photo of the product, add a few details, choose a collection branch and submit. You will receive a reference number, and our team will review the request and contact you.",
     link: { href: "/request-product", label: "Request a product" },
   },
@@ -25,6 +33,7 @@ export const faqs: Faq[] = [
   },
   {
     q: "Does a product request guarantee availability?",
+    home: true,
     a: "No. A product request is not an order or a guarantee. Sourcing feasibility, price, availability and collection timing are all confirmed by our team after review. We cannot promise that every requested product can be sourced, or sourced at ₹99.",
   },
   {
@@ -34,10 +43,12 @@ export const faqs: Faq[] = [
   },
   {
     q: "What does FOFO mean?",
+    home: true,
     a: "FOFO stands for Franchisee Owned, Franchisee Operated. The franchise partner generally invests in and runs the outlet — including premises, setup, initial stock, staff and running costs — while MaxxCity Mart provides the brand and the agreed support, subject to the final agreement.",
   },
   {
     q: "What investment is required to open a franchise?",
+    home: true,
     a: "Investment depends on the location, store size and setup. We share the commercial requirements directly with applicants during the discussion stage rather than publishing a single figure. Please submit an enquiry or call us for details.",
   },
   {
@@ -52,5 +63,5 @@ export const faqs: Faq[] = [
   },
 ];
 
-/** The subset shown on the homepage. */
-export const homeFaqs = [faqs[1], faqs[3], faqs[5], faqs[7], faqs[8]];
+/** Questions marked `home: true`, in the same order. */
+export const homeFaqs = faqs.filter((f) => f.home);
