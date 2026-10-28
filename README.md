@@ -124,7 +124,7 @@ read from this one list.
 ## SEO
 
 - Per-page titles, descriptions, canonical URLs, Open Graph and Twitter cards via `pageMetadata()` in [`src/lib/seo.ts`](src/lib/seo.ts).
-- Social image: `public/images/og-default.jpg` (logo + real storefront, 1200×630).
+- Social image: `public/social/og-default.jpg` (logo + real storefront, 1200×630).
 - `/sitemap.xml`, `/robots.txt` (preview deployments on Vercel are `Disallow: /`), `/manifest.webmanifest`.
 - Structured data: `Organization`, `WebSite`, `Store` (address and phone only — no invented hours, ratings or geo) and `BreadcrumbList`. `FAQPage` markup is deliberately not used: Google now limits FAQ rich results to authoritative government and health sites.
 - Redirects for common/legacy URLs live in [`next.config.ts`](next.config.ts) — add one whenever a page moves.

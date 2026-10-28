@@ -1,11 +1,11 @@
-import { readdirSync, statSync } from "node:fs";
+import { existsSync, readdirSync, statSync } from "node:fs";
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import robots from "@/app/robots";
 import sitemap from "@/app/sitemap";
 import { stores } from "@/content/stores";
 import { breadcrumbJsonLd, organizationJsonLd, storeJsonLd } from "@/lib/seo/json-ld";
-import { pageMetadata, siteUrl } from "@/lib/seo/metadata";
+import { defaultOgImage, pageMetadata, siteUrl } from "@/lib/seo/metadata";
 
 /** Every public page route under src/app, e.g. "/legal/privacy". */
 function pageRoutes(dir = path.resolve("src/app"), prefix = ""): string[] {
@@ -58,6 +58,13 @@ describe("page metadata", () => {
       index: false,
       follow: true,
     });
+  });
+});
+
+describe("referenced images", () => {
+  it("exist in public/", () => {
+    const paths = [defaultOgImage.url, ...stores.flatMap((s) => (s.photo ? [s.photo.src] : []))];
+    for (const p of paths) expect(existsSync(path.join("public", p)), p).toBe(true);
   });
 });
 

@@ -20,7 +20,7 @@ import { productRequestSteps } from "@/content/product-requests";
 import { openStores, shortLocation } from "@/content/stores";
 import { allStoresJsonLd } from "@/lib/seo/json-ld";
 import { pageMetadata } from "@/lib/seo/metadata";
-import storefront from "../../public/images/maxxcity-mart-adilabad-storefront.jpg";
+import storefront from "../../public/images/storefront/adilabad-opening-day.jpg";
 
 export const metadata = {
   ...pageMetadata({

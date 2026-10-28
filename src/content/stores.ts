@@ -49,7 +49,7 @@ export const stores: Store[] = [
     hours: null,
     acceptsProductRequestCollection: true,
     photo: {
-      src: "/images/maxxcity-mart-adilabad-storefront.jpg",
+      src: "/images/storefront/adilabad-opening-day.jpg",
       alt: "MaxxCity Mart storefront on Adilabad Main Road, decorated with blue and white balloons on opening day",
     },
   },

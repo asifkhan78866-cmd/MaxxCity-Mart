@@ -6,7 +6,7 @@ export const siteUrl = resolveSiteUrl();
 export const absoluteUrl = (path = "/") => `${siteUrl}${path === "/" ? "" : path}`;
 
 const ogImage = {
-  url: "/images/og-default.jpg",
+  url: "/social/og-default.jpg",
   width: 1200,
   height: 630,
   alt: "MaxxCity Mart logo beside the Adilabad storefront",

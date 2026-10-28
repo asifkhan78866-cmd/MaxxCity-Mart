@@ -10,7 +10,7 @@ import { CategoryGrid } from "@/components/sections/category-grid";
 import { CtaBand } from "@/components/sections/cta-band";
 import { site } from "@/content/site";
 import { pageMetadata } from "@/lib/seo/metadata";
-import storefront from "../../../public/images/maxxcity-mart-adilabad-storefront.jpg";
+import storefront from "../../../public/images/storefront/adilabad-opening-day.jpg";
 
 export const metadata = pageMetadata({
   title: "About Us — Fixed-Price Variety Retail",
